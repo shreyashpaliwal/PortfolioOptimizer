@@ -46,7 +46,7 @@
 		<property name="url"
 			value="jdbc:oracle:thin:@prophet.njit.edu:1521:course" />
 		<property name="username" value="snp59" />
-		<property name="password" value="1sepQCyx2" />
+		<property name="password" value="" />
 		<property name="initialSize" value="5" />
 		<property name="maxActive" value="10" />
 	</bean>
