@@ -30,7 +30,7 @@ public class InvestorLoginController {
 	@Autowired
 	private LoginService loginService;
 
-	@RequestMapping(value = "/login.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.htm", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam(name = "username") String username,
 			@RequestParam(name = "password") char[] password) {
 
