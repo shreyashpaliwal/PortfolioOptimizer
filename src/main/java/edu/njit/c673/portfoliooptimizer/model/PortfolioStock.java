@@ -35,14 +35,14 @@ public class PortfolioStock implements Serializable {
 	@Column(name = "STOCK_SYMBOL", nullable = false)
 	private String stockSymbol;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "STOCK_EXCHANGE_ID", foreignKey = @ForeignKey(name = "FK_PFL_STK_EX_TYP") )
 	private StockExchangeType stockExchangeType;
 
-	@Column(name = "SHARE_QUANTITY", precision = 2)
+	@Column(name = "SHARE_QUANTITY", precision = 10)
 	private BigDecimal shareQuantity;
 
-	@Column(name = "PURCHASE_PRICE", precision = 2)
+	@Column(name = "PURCHASE_PRICE", precision = 10)
 	private BigDecimal purchasePrice;
 
 	public int getPortfolioStockId() {

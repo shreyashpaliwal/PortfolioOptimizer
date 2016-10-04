@@ -2,18 +2,13 @@ package edu.njit.cs673.portfoliooptimizer.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
-//import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.njit.c673.portfoliooptimizer.model.Investor;

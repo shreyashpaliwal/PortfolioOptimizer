@@ -39,7 +39,7 @@ public class Portfolio implements Serializable {
 	@Column(name = "PORTFOLIO_NAME", nullable = false)
 	private String portfolioName;
 
-	@Column(name = "CASH_BALANCE", precision = 2, nullable = false)
+	@Column(name = "CASH_BALANCE", precision = 10, nullable = false)
 	private BigDecimal cashBalance;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "portfolio")
