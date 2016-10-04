@@ -44,7 +44,7 @@ public class Investor implements Serializable {
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date creationDate;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "investor")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "investor")
 	private List<Portfolio> portfolios;
 
 	public int getInvestorId() {

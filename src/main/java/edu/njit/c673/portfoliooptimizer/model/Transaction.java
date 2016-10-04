@@ -46,10 +46,10 @@ public class Transaction implements Serializable {
 	@Column(name = "TRANSACTION_AMOUNT", nullable = false)
 	private BigDecimal transactionAmount;
 
-	@Column(name = "SHARE_QUANTITY", precision = 2)
+	@Column(name = "SHARE_QUANTITY", precision = 10)
 	private float shareQuantity;
 
-	@Column(name = "UNIT_SHARE_PRICE", precision = 2)
+	@Column(name = "UNIT_SHARE_PRICE", precision = 10)
 	private BigDecimal unitSharePrice;
 
 	public int getTransactionId() {
