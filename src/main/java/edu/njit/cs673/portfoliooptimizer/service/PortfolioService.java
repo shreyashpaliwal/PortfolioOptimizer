@@ -13,4 +13,6 @@ public interface PortfolioService {
 	public List<PortfolioStock> getStocksByPortfolio(int portfolioId);
 
 	public void addCash(int portfolioId, BigDecimal cash);
+	
+	public void SavePortfolio(String portfolioName,String currency, String portfolioDescription, int investorID);
 }

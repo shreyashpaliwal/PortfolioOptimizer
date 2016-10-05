@@ -1,11 +1,17 @@
 package edu.njit.cs673.portfoliooptimizer.dao;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.model.relational.Sequence;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +19,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.njit.c673.portfoliooptimizer.model.Investor;
 import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 
@@ -60,4 +67,18 @@ public class PortfolioDaoImpl implements PortfolioDao {
 		return template.get(Portfolio.class, portfolioId);
 
 	}
+
+	public void SavePortfolio(String portfolioName,String currency, String portfolioDescription,int investorID) {
+		
+		String sql1 = "insert into Portfolio (portfolio_ID,portfolio_Name,Creation_Date,CASH_BALANCE,INVESTOR_ID) values(portfolio_seq.nextval, :portfolioName,:creationDate,:cashbalance,:investorID)";
+		Query sql = sessionFactory.getCurrentSession().createSQLQuery(sql1);
+		sql.setParameter("portfolioName",portfolioName);
+		sql.setParameter("creationDate",Instant.now());
+		sql.setParameter("cashbalance",0);
+		sql.setParameter("investorID",investorID);
+		sql.executeUpdate();
+		
+	}
+
+	
 }

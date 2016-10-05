@@ -42,4 +42,9 @@ public class LoginServiceImpl implements LoginService {
 	public void setInvestorDao(InvestorDao investorDao) {
 		this.investorDao = investorDao;
 	}
+
+	@Override
+	public Investor getInvestorByUsername(String username) {
+		return investorDao.getInvestorByUsername(username);
+	}
 }

@@ -93,9 +93,7 @@ body {
 		<nav>
 		<ul>
 
-			<%-- <li><a href="${pageContext.request.contextPath}/addCash.htm">Add Cash</a></li> --%>
-			<li><a href="${pageContext.request.contextPath}/BuyOrSellShares.htm">Buy or Sell Shares</a></li>
-			
+			<li><a href="${pageContext.request.contextPath}/BuyOrSellShares.htm">Buy or Sell Shares</a></li>		
 <!-- 			<li><a
 				href="file:///C:/Users/Shweta/Desktop/SPDM/viewportfolio.html">View
 					Portfolio</a></li>

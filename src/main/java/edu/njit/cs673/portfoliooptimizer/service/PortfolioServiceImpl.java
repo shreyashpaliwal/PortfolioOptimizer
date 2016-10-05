@@ -32,9 +32,17 @@ public class PortfolioServiceImpl implements PortfolioService {
 		
 	}
 
+	@Override
 	public Portfolio getPortfolioById(int portfolioId){
 		
 		return portfolioDao.getPortfolioById(portfolioId);
+		
+	}
+
+	@Override
+	public void SavePortfolio(String portfolioName,String currency, String portfolioDescription, int investorID) {
+		
+		portfolioDao.SavePortfolio(portfolioName,currency,portfolioDescription, investorID);
 		
 	}
 }

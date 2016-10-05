@@ -9,4 +9,5 @@ public interface LoginService {
 
 	public Investor authenticate(String username, char[] password) throws AuthenticationException;
 
+	public Investor getInvestorByUsername(String username);
 }

@@ -34,35 +34,32 @@ public class ViewPortfolioController {
 	StockService stockService;
 
 	@RequestMapping(value = "/getPortfolioDetails.htm", method = RequestMethod.GET)
-	public ModelAndView getStockDetails(@RequestParam(name = "portfolioId", required = true) int portfolioId, HttpSession session) {
+	public ModelAndView getStockDetails(@RequestParam(name = "portfolioId", required = true) int portfolioId,
+			HttpSession session) {
 
 		Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
-		session.setAttribute("portfolio", portfolio);		
-		
+		session.setAttribute("portfolio", portfolio);
+
 		ModelAndView model = new ModelAndView("viewPortfolio");
 
 		log.debug("Getting portfolio Stocks for portfolio ID - " + portfolioId);
 
-		
-		
 		List<PortfolioStock> stocks = portfolioService.getStocksByPortfolio(portfolioId);
-				
-		//model.addObject("portfolioStocks", stocks);
+
+		// model.addObject("portfolioStocks", stocks);
 
 		List<StockPerformance> performanceMatrix = null;
-		try {
-			performanceMatrix = stockService.getStockPerformance(stocks);
-		} catch (IOException e) {
-			log.error("Performance matrices could not be fetched.");
+
+		if (stocks != null && stocks.size() > 0) {
+			try {
+				performanceMatrix = stockService.getStockPerformance(stocks);
+			} catch (IOException e) {
+				log.error("Performance matrices could not be fetched.");
+			}
+
 		}
 
-		
-		
 		model.addObject("performanceMatrix", performanceMatrix);
-
-		for (PortfolioStock stock : stocks) {
-			log.debug("Stock Added:" + stock.getStockSymbol());
-		}
 
 		return model;
 	}
