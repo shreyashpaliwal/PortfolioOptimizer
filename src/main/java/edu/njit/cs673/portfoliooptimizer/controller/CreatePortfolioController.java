@@ -26,12 +26,12 @@ import edu.njit.cs673.portfoliooptimizer.vo.InvestorProfileVO;
 @Controller
 public class CreatePortfolioController {
 
-	private static final Logger log = Logger.getLogger(CreatePortfolioController.class);
-
 	@Autowired
 	private LoginService loginService;
 	@Autowired
 	private PortfolioService portfolioService;
+	
+	private static final Logger log = Logger.getLogger(CreatePortfolioController.class);
 
 	@RequestMapping(value = "/CreatePortfolio.htm", method = RequestMethod.POST)
 	public ModelAndView CreatePortfolio(HttpSession session) {
@@ -45,14 +45,12 @@ public class CreatePortfolioController {
 
 	@RequestMapping(value = "/SavePortfolio.htm", method = RequestMethod.GET)
 	public ModelAndView SavePortfolio(@RequestParam(name = "portfolioname") String portfolioname,
-			@RequestParam(name = "currency") String currency,
 			@RequestParam(name = "portfoliodescription") String portfoliodescription, HttpSession session) {
 
 		ModelAndView model = new ModelAndView("portfolioList");
-
+		String currency = "usd";
 		int investorID = ((Investor) session.getAttribute("investor")).getInvestorId();
-		// int investorID =
-		// Integer.parseInt(session.getAttribute("investorId").toString()) ;
+		log.debug("User with investorID" + investorID + " has created portfolio of name" + portfolioname);
 		portfolioService.SavePortfolio(portfolioname, currency, portfoliodescription, investorID);
 
 		session.setAttribute("investor",

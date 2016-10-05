@@ -86,30 +86,10 @@ body {
 <body>
 
 	<div class="container">
-
-
-
-
-		<nav>
-		<ul>
-
-			<li><a href="${pageContext.request.contextPath}/BuyOrSellShares.htm">Buy or Sell Shares</a></li>		
-<!-- 			<li><a
-				href="file:///C:/Users/Shweta/Desktop/SPDM/viewportfolio.html">View
-					Portfolio</a></li>
-			<li><a href="#">Import Transaction</a></li>
-
-			<li><a
-				href="file:///C:/Users/Shweta/Desktop/SPDM/editportfolio.html">Edit
-					Portfolio</a></li>
-			<li><a href="#">Download to spreadsheet</a></li> -->
-		</ul>
-		</nav>
-		
 		<div>
 
 			<table>
-				
+
 				<h2>Cash Balance: ${portfolio.cashBalance }</h2>
 
 				<caption>
@@ -161,7 +141,7 @@ body {
 							<td>${perf.costBasis}</td>
 
 							<td>${perf.marketValue}</td>
-							
+
 							<td>${perf.gain}</td>
 
 							<td>${perf.gainPercentage}</td>
@@ -171,19 +151,27 @@ body {
 							<td>${perf.overallReturn}</td>
 
 						</tr>
-</c:forEach>
-					</tbody>
+					</c:forEach>
+				</tbody>
 
-				</table>
-			</div>
+			</table>
+		</div>
 		</article>
 
-	<div>
-	<form action="${pageContext.request.contextPath}/addCash.htm">
-		<h3><label>Add Cash:</label> <input type="text" name="cashAmount"></input> <input type="submit"></input> </h3>
-		<input type="hidden" value="${portfolio.portfolioId}" name="portfolioId"/>
-	</form>
-	</div>
+		<div>
+			<form action="${pageContext.request.contextPath}/addCash.htm">
+				<h3>
+					<label>Add Cash:</label> <input type="text" name="cashAmount"></input>
+					<input type="submit"></input>
+				</h3>
+				<input type="hidden" value="${portfolio.portfolioId}"
+					name="portfolioId" />
+			</form>
+
+			<a
+				href="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}">Buy
+				Share</a>
+		</div>
 
 	</div>
 

@@ -9,18 +9,19 @@
 </head>
 <body>
 	<div>
-		<form action="${pageContext.request.contextPath}/CreatePortfolio.htm" method="post">
+		<form action="${pageContext.request.contextPath}/CreatePortfolio.htm"
+			method="post">
 			<h1>Hello ${sessionScope.investor.firstName }</h1>
-			<br>
-			<br>
+			<br> <br>
 			<hr>
 			<input type="submit" title="Create Portfolio" name="btnPortfolio">
-			
+
 			<p>Please select from the list of portfolios below.</p>
 			<ul>
 				<c:forEach items="${sessionScope.investor.portfolios}"
 					var="portfolio">
-					<li><a href="${pageContext.request.contextPath}/getPortfolioDetails.htm?portfolioId=${portfolio.portfolioId}">${portfolio.portfolioName }</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/getPortfolioDetails.htm?portfolioId=${portfolio.portfolioId}">${portfolio.portfolioName }</a></li>
 				</c:forEach>
 			</ul>
 		</form>

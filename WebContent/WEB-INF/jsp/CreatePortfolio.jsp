@@ -11,7 +11,7 @@
 		method="get">
 		<table>
 			<tr>
-				<td><label for="txtPortfolioName">Portfolio Name:</label></td>
+				<td><label for= "txtPortfolioName">Portfolio Name:</label></td>
 				<td><input type="text" id="txtPortfolioName"
 					name="portfolioname"></td>
 			</tr>
