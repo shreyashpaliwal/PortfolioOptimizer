@@ -9,18 +9,26 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
+import edu.njit.c673.portfoliooptimizer.model.StockInventory;
 import edu.njit.c673.portfoliooptimizer.model.StockPerformance;
+import edu.njit.cs673.portfoliooptimizer.dao.StockInventoryDao;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
 @Service
+@Transactional
 public class StockServiceImpl implements StockService {
 
 	private static final Logger log = Logger.getLogger(StockServiceImpl.class);
 
+	@Autowired
+	StockInventoryDao stockinventory;
+	
 	@Override
 	public Map<String, Stock> getStockQuotes(String[] stockSymbols) {
 		try {
@@ -90,4 +98,13 @@ public class StockServiceImpl implements StockService {
 	public void addCash(int portfolioId, BigDecimal cash){
 		
 	}
+
+
+	@Override
+	public List<StockInventory> getStockFromInventory() {
+		
+		return stockinventory.getAllStockInventory();
+	}
+
+	
 }
