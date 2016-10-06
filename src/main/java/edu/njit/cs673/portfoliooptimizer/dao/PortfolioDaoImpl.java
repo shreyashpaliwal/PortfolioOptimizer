@@ -1,8 +1,7 @@
 package edu.njit.cs673.portfoliooptimizer.dao;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.Instant;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class PortfolioDaoImpl implements PortfolioDao {
 		String sql1 = "insert into Portfolio (portfolio_ID,portfolio_Name,Creation_Date,CASH_BALANCE,INVESTOR_ID) values(portfolio_seq.nextval, :portfolioName,:creationDate,:cashbalance,:investorID)";
 		Query sql = sessionFactory.getCurrentSession().createSQLQuery(sql1);
 		sql.setParameter("portfolioName",portfolioName);
-		sql.setParameter("creationDate",Instant.now());
+		sql.setParameter("creationDate",new Date());
 		sql.setParameter("cashbalance",0);
 		sql.setParameter("investorID",investorID);
 		sql.executeUpdate();
