@@ -41,7 +41,7 @@ public class BuyShareController {
 	@Autowired
 	PortfolioStockService portfoliostockService;
 	
-	@RequestMapping(value = "/BuyShare.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/BuyShare.htm", method = RequestMethod.POST)
 	public ModelAndView BuyShare(@RequestParam(name = "portfolioId", required = true) int portfolioId) {
 
 		ModelAndView model = new ModelAndView("BuyShare");
@@ -53,49 +53,4 @@ public class BuyShareController {
 		return model;
 	}
 	
-	
-	@RequestMapping(value = "/addShare.htm", method = RequestMethod.POST)
-	public ModelAndView addShare(@RequestParam(name = "hdportfolioId") int hdportfolioId,
-			@RequestParam(name = "stocklist") String stockSymbol, @RequestParam(name = "shareQuantity") int shareQuantity, HttpSession session) throws IOException {
-
-		
-		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol);
-		if(portfoliostock!= null)
-		{
-			
-		}
-		else
-		{
-			Stock stock = YahooFinance.get(stockSymbol);			 
-			BigDecimal price = stock.getQuote().getPrice();
-			portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
-		}
-		
-		Portfolio portfolio = portfolioService.getPortfolioById(hdportfolioId);
-		session.setAttribute("portfolio", portfolio);
-
-		ModelAndView model = new ModelAndView("viewPortfolio");
-
-		log.debug("Getting portfolio Stocks for portfolio ID - " + hdportfolioId);
-
-		List<PortfolioStock> stocks = portfolioService.getStocksByPortfolio(hdportfolioId);
-
-		// model.addObject("portfolioStocks", stocks);
-
-		List<StockPerformance> performanceMatrix = null;
-
-		if (stocks != null && stocks.size() > 0) {
-			try {
-				performanceMatrix = stockService.getStockPerformance(stocks);
-			} catch (IOException e) {
-				log.error("Performance matrices could not be fetched.");
-			}
-
-		}
-
-		model.addObject("performanceMatrix", performanceMatrix);
-
-		return model;
-	}
-
 }

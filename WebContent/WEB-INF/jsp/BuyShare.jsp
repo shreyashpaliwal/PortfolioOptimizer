@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action=""${pageContext.request.contextPath}/addShare.htm"
+	<form action="${pageContext.request.contextPath}/addShare.htm"
 		method="post">
 		<input type="hidden" value="${portfolioId}" name="hdportfolioId">
 		<table>

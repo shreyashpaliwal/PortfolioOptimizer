@@ -1,7 +1,6 @@
 package edu.njit.cs673.portfoliooptimizer.dao;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -39,14 +38,14 @@ public class PortfolioStockDaoImpl implements PortfolioStockDao {
 
 		@SuppressWarnings("unchecked")
 
-		PortfolioStock portfolioStock = (PortfolioStock) template
-				.findByCriteria(DetachedCriteria.forClass(PortfolioStock.class).add(Restrictions.eq("", stockSymbol)));
+		List<PortfolioStock> portfolioStock = (List<PortfolioStock>) template
+				.findByCriteria(DetachedCriteria.forClass(PortfolioStock.class).add(Restrictions.eq("stockSymbol", stockSymbol)));
 
-		if (portfolioStock == null) {
+		if (portfolioStock == null || portfolioStock.isEmpty()) {
 			log.info("No Stoclk found matching StockSymbol- " + stockSymbol);
 			return null;
 		} else {
-			return portfolioStock;
+			return portfolioStock.get(0);
 		}
 	}
 

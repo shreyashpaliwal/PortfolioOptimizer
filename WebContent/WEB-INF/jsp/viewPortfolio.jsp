@@ -177,15 +177,15 @@ body {
 					name="portfolioId" />
 			</form>
 
-			<a
-				href="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}">Buy
-				Share</a>
-				
+		<form action="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}" method="post">
+			<input type="submit"> Buy Share</input>
+		</form>		
+
+		<form action="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}" method="post">
+			<input type="submit"> Buy Share</input>
+		</form>		
 			
-		</div>
-			<a
-				href="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}"><br>Sell
-				Share</a>
+		</div>			
 	</div>
 
 </body>
