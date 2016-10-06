@@ -45,4 +45,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 		portfolioDao.SavePortfolio(portfolioName,currency,portfolioDescription, investorID);
 		
 	}
+
+	@Override
+	public void removeCash(int portfolioId, BigDecimal cash) {
+		// TODO Auto-generated method stub
+		portfolioDao.removeCash(portfolioId, cash);
+		
+	}
 }

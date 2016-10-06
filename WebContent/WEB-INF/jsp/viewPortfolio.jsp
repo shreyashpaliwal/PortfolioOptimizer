@@ -160,9 +160,18 @@ body {
 
 		<div>
 			<form action="${pageContext.request.contextPath}/addCash.htm">
-				<h3>
+				<h3><br>
 					<label>Add Cash:</label> <input type="text" name="cashAmount"></input>
-					<input type="submit"></input>
+					<input type="submit" value="deposit"></input>
+				</h3>
+				<input type="hidden" value="${portfolio.portfolioId}"
+					name="portfolioId" />
+			</form>
+			
+			<form action="${pageContext.request.contextPath}/removeCash.htm">
+				<h3><br>
+					<label>Withdraw Cash:</label> <input type="text" name="cashAmount"></input>
+					<input type="submit" value="Withdraw"></input>
 				</h3>
 				<input type="hidden" value="${portfolio.portfolioId}"
 					name="portfolioId" />
@@ -171,8 +180,12 @@ body {
 			<a
 				href="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}">Buy
 				Share</a>
+				
+			
 		</div>
-
+			<a
+				href="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}"><br>Sell
+				Share</a>
 	</div>
 
 </body>

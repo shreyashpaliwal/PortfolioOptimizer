@@ -14,7 +14,7 @@
 			<h1>Hello ${sessionScope.investor.firstName }</h1>
 			<br> <br>
 			<hr>
-			<input type="submit" title="Create Portfolio" name="btnPortfolio">
+			<input type="submit" title="Create Portfolio" name="btnPortfolio" value="New Portfolio">
 
 			<p>Please select from the list of portfolios below.</p>
 			<ul>

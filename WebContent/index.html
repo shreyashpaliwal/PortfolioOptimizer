@@ -6,6 +6,10 @@
 <title>Login</title>
 <meta name="generator" content="Google Web Designer 1.6.2.0916">
 <style type="text/css" id="gwd-text-style">
+mark {
+    background-color: transperent;
+    color: Blue;
+}
 p {
 	margin: 0px;
 }
@@ -33,7 +37,9 @@ body {
 	transform: perspective(1400px)
 		matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	transform-style: preserve-3d;
-	background-color: transparent;
+	background-color: cyan;
+	background-image:url(images/bg.jpg);
+	background-size: cover;
 }
 
 .gwd-form-1qgi {
@@ -44,14 +50,14 @@ body {
 </head>
 
 <body>
-	<form class="gwd-form-1qgi" action="/PortfolioOptimizer/login.htm" method="post">
+	<form class="gwd-form-1qgi"  action="/PortfolioOptimizer/login.htm" method="post">
 		<br>
 		<div style="text-align: center">
-			<h2>Sign in please!!</h2>
+			<h2><b>Sign in please!!</b></h2>
 			<label for="username">Username: </label><input type="text"
 				name="username"><br> <br> <label for="password">Password:
 			</label><input type="password" name="password"><br> <br> <br>
-			<input type="submit" name="Login"><br>
+			<input type="submit" name="Login" value="login"><br>
 
 		</div>
 	</form>

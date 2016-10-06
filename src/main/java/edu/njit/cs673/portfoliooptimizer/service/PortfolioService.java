@@ -14,5 +14,7 @@ public interface PortfolioService {
 
 	public void addCash(int portfolioId, BigDecimal cash);
 	
+	public void removeCash(int portfolioId, BigDecimal cash);
+	
 	public void SavePortfolio(String portfolioName,String currency, String portfolioDescription, int investorID);
 }
