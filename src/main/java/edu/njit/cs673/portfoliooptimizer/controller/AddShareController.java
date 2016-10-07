@@ -1,7 +1,11 @@
 package edu.njit.cs673.portfoliooptimizer.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -31,26 +35,40 @@ public class AddShareController {
 
 	@Autowired
 	StockService stockService;
-	
+
 	@Autowired
 	PortfolioService portfolioService;
-	
+
 	@Autowired
 	PortfolioStockService portfoliostockService;
-	
-	
-	
+
 	@RequestMapping(value = "/addShare.htm", method = RequestMethod.POST)
 	public ModelAndView addShare(@RequestParam(name = "hdportfolioId") int hdportfolioId,
-			@RequestParam(name = "stocklist") String stockSymbol, @RequestParam(name = "shareQuantity") int shareQuantity, HttpSession session) throws IOException {
+			@RequestParam(name = "stocklist") String stockSymbol,
+			@RequestParam(name = "shareQuantity") int shareQuantity, HttpSession session) throws IOException {
 
-		
-		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol);
-		
-			Stock stock = YahooFinance.get(stockSymbol);			 
-			BigDecimal price = stock.getQuote().getPrice();
-			portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
-					
+		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol, hdportfolioId);
+		// error list for validation
+		List<String> errorMessages = new ArrayList<String>();
+
+		if (stockSymbol.equals(null) || shareQuantity == 0) {
+			errorMessages.add("stock symbol or quantity is not specified");
+		}
+		BigDecimal price = null ;
+		if (portfoliostock.equals(null)) {
+			URL	url = new URL(" http://finance.yahoo.com/quote/"+stockSymbol+"/history?period1=1473652800&period2=1473652800&interval=1d&filter=history&frequency=1d");
+			BufferedReader br= new BufferedReader(new InputStreamReader(url.openStream()));
+			String s = br.toString();
+			
+		} else {
+
+			Stock stock = YahooFinance.get(stockSymbol);
+			price = stock.getQuote().getPrice();
+		}
+		portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
+
+		/// http://finance.yahoo.com/quote/MS/history?period1=1473652800&period2=1473652800&interval=1d&filter=history&frequency=1d
+
 		Portfolio portfolio = portfolioService.getPortfolioById(hdportfolioId);
 		session.setAttribute("portfolio", portfolio);
 
@@ -71,9 +89,12 @@ public class AddShareController {
 				log.error("Performance matrices could not be fetched.");
 			}
 
+		} else {
+			errorMessages.add("Server Error loading the page");
 		}
 
 		model.addObject("performanceMatrix", performanceMatrix);
+		model.addObject("errorMessages", errorMessages);
 
 		return model;
 	}

@@ -34,13 +34,21 @@ public class PortfolioStockDaoImpl implements PortfolioStockDao {
 	private HibernateTemplate template;
 
 	@Override
-	public PortfolioStock getPortfoliostockByStockSymbol(String stockSymbol) {
+	public PortfolioStock getPortfoliostockByStockSymbol(String stockSymbol,int portfolioID) {
 
 		@SuppressWarnings("unchecked")
 
 		List<PortfolioStock> portfolioStock = (List<PortfolioStock>) template
 				.findByCriteria(DetachedCriteria.forClass(PortfolioStock.class).add(Restrictions.eq("stockSymbol", stockSymbol)));
-
+		
+		for(int i = 0;i<portfolioStock.size();i++)
+		{
+			if(portfolioStock.get(i).getPortfolio().getPortfolioId()==portfolioID) 
+				return portfolioStock.get(i);
+			else
+				return null;
+		}
+		
 		if (portfolioStock == null || portfolioStock.isEmpty()) {
 			log.info("No Stoclk found matching StockSymbol- " + stockSymbol);
 			return null;

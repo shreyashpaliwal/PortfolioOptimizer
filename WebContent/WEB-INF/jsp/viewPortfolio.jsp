@@ -91,6 +91,8 @@ body {
 			<table>
 
 				<h2>Cash Balance: ${portfolio.cashBalance }</h2>
+				
+				<h2> portfolio ID: ${portfolio.portfolioId }</h2>
 
 				<caption>
 
@@ -120,8 +122,6 @@ body {
 
 						<th>Gain %</th>
 
-						<th>Day's gain</th>
-
 						<th>Overall return</th>
 
 					</tr>
@@ -146,7 +146,7 @@ body {
 
 							<td>${perf.gainPercentage}</td>
 
-							<td>${perf.daysGain}</td>
+							<!-- <td>${perf.daysGain}</td> -->
 
 							<td>${perf.overallReturn}</td>
 
@@ -162,7 +162,7 @@ body {
 			<form action="${pageContext.request.contextPath}/addCash.htm">
 				<h3><br>
 					<label>Add Cash:</label> <input type="text" name="cashAmount"></input>
-					<input type="submit" value="deposit"></input>
+					<input type="submit" value="deposit"></input><br><br>
 				</h3>
 				<input type="hidden" value="${portfolio.portfolioId}"
 					name="portfolioId" />
@@ -171,21 +171,27 @@ body {
 			<form action="${pageContext.request.contextPath}/removeCash.htm">
 				<h3><br>
 					<label>Withdraw Cash:</label> <input type="text" name="cashAmount"></input>
-					<input type="submit" value="Withdraw"></input>
+					<input type="submit" value="Withdraw"></input><br><br>
 				</h3>
 				<input type="hidden" value="${portfolio.portfolioId}"
 					name="portfolioId" />
 			</form>
-
-		<form action="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}" method="post">
-			<input type="submit"> Buy Share</input>
+	</div>
+	
+	<div>
+		<form action="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}">
+			<input type="submit" value="BuyShare"></input><br>
+			<input type="hidden" value="${portfolio.portfolioId}"
+					name="portfolioId" /> <br><br>
 		</form>		
 
-		<form action="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}" method="post">
-			<input type="submit"> Buy Share</input>
-		</form>		
+		<form action="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}">
+			<input type="submit" value="SellShare"></input><br>
+			<input type="hidden" value="${portfolio.portfolioId}"
+					name="portfolioId" /> <br><br>
+		</form>	
+	</div>	
 			
-		</div>			
 	</div>
 
 </body>

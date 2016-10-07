@@ -44,10 +44,14 @@ public class StockServiceImpl implements StockService {
 	public List<StockPerformance> getStockPerformance(List<PortfolioStock> portfolioStocks) throws IOException {
 
 		Map<String, BigDecimal> stockBuyPriceMap = new HashMap<String, BigDecimal>();
+		Map<String, BigDecimal> stockshareQuantityMap = new HashMap<String,BigDecimal>();
 
 		for (PortfolioStock stock : portfolioStocks) {
 			stockBuyPriceMap.put(stock.getStockSymbol(), stock.getPurchasePrice());
+			stockshareQuantityMap.put(stock.getStockSymbol(), stock.getShareQuantity());
 		}
+		
+		
 
 		Map<String, Stock> stockMap = null;
 
@@ -73,17 +77,24 @@ public class StockServiceImpl implements StockService {
 				// stockPerformance.setMarketValue(new BigDecimal(0));
 
 				BigDecimal buyPrice = stockBuyPriceMap.get(entry.getKey());
-				
+				BigDecimal stockQuantity = stockshareQuantityMap.get(entry.getKey());
 				BigDecimal currPrice = entry.getValue().getQuote().getPrice();
 				
 				BigDecimal gain = null;
 				BigDecimal gainper = null;
+				BigDecimal costBasis = null;
 				if (currPrice != null) {
 					gain = currPrice.subtract(buyPrice);
+					costBasis = currPrice.multiply(stockQuantity);
+					log.debug("The costBasis calculated as: "+costBasis );
+					stockPerformance.setCostBasis(costBasis);
+					stockPerformance.setMarketValue(costBasis);
 					stockPerformance.setGain(gain);
 					stockPerformance.setChange(entry.getValue().getQuote().getChange());
 					gainper = (gain.divide(buyPrice,RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
 					stockPerformance.setGainPercentage(gainper);
+					stockPerformance.setOverallReturn(gainper);
+					
 				}												
 
 				stockPerformanceList.add(stockPerformance);

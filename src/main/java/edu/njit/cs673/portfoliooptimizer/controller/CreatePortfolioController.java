@@ -49,9 +49,16 @@ public class CreatePortfolioController {
 
 		ModelAndView model = new ModelAndView("portfolioList");
 		String currency = "usd";
+		List<String> errorMessages = new ArrayList<String>();
 		int investorID = ((Investor) session.getAttribute("investor")).getInvestorId();
 		log.debug("User with investorID" + investorID + " has created portfolio of name" + portfolioname);
+		if(portfolioname.isEmpty())
+		{
+			errorMessages.add("portfolio name is null");
+		}
+		
 		portfolioService.SavePortfolio(portfolioname, currency, portfoliodescription, investorID);
+		model.addObject("errorMessages", errorMessages);
 
 		session.setAttribute("investor",
 				loginService.getInvestorByUsername(((Investor) session.getAttribute("investor")).getUserName()));

@@ -17,9 +17,9 @@ public class PortfolioStockServiceImpl implements PortfolioStockService{
 	PortfolioStockDao portfoliostockservice;
 	
 	@Override
-	public PortfolioStock getPortfoliostockByStockSymbol(String stockSymbol) {
+	public PortfolioStock getPortfoliostockByStockSymbol(String stockSymbol,int portfolioID) {
 		
-		return portfoliostockservice.getPortfoliostockByStockSymbol(stockSymbol);
+		return portfoliostockservice.getPortfoliostockByStockSymbol(stockSymbol,portfolioID);
 	}
 
 	@Override

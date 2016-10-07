@@ -2,6 +2,7 @@ package edu.njit.cs673.portfoliooptimizer.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -36,6 +37,12 @@ public class CashTransactionController {
 		session.getAttribute("viewPortfolio");
 		
 		ModelAndView model = new ModelAndView("viewPortfolio");
+		List<String> errorMessages = new ArrayList<String>();
+		
+		if(portfolioId == 0 || cashAmount==0)
+		{
+			errorMessages.add("portfolio ID or cash is null");
+		}
 		
 		portfolioService.addCash(portfolioId, new BigDecimal(cashAmount));
 		
@@ -52,6 +59,7 @@ public class CashTransactionController {
 		}		
 		
 		model.addObject("performanceMatrix", performanceMatrix);
+		model.addObject("errorMessages", errorMessages);
 		
 		return model;
 	}

@@ -2,6 +2,7 @@ package edu.njit.cs673.portfoliooptimizer.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -41,16 +42,70 @@ public class BuyShareController {
 	@Autowired
 	PortfolioStockService portfoliostockService;
 	
-	@RequestMapping(value = "/BuyShare.htm", method = RequestMethod.POST)
+	@RequestMapping(value = "/BuyShare.htm", method = RequestMethod.GET)
 	public ModelAndView BuyShare(@RequestParam(name = "portfolioId", required = true) int portfolioId) {
 
 		ModelAndView model = new ModelAndView("BuyShare");
 		
+		List<String> errorMessages = new ArrayList<String>();
+		
+		
 		List<StockInventory> stocks = stockService.getStockFromInventory();
+		
+		if(portfolioId == 0 || stocks.isEmpty())
+		{
+			errorMessages.add("portfolio ID or stock details missing");
+		}
 		model.addObject("portfolioId", portfolioId);
 		model.addObject("stocks", stocks);
+		model.addObject("errorMessages",errorMessages);
 
 		return model;
 	}
 	
+	
+//	@RequestMapping(value = "/addShare.htm", method = RequestMethod.POST)
+//	public ModelAndView addShare(@RequestParam(name = "hdportfolioId") int hdportfolioId,
+//			@RequestParam(name = "stocklist") String stockSymbol, @RequestParam(name = "shareQuantity") int shareQuantity, HttpSession session) throws IOException {
+//
+//		
+//		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol);
+//		if(portfoliostock!= null)
+//		{
+//			
+//		}
+//		else
+//		{
+//			Stock stock = YahooFinance.get(stockSymbol);			 
+//			BigDecimal price = stock.getQuote().getPrice();
+//			portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
+//		}
+//		
+//		Portfolio portfolio = portfolioService.getPortfolioById(hdportfolioId);
+//		session.setAttribute("portfolio", portfolio);
+//
+//		ModelAndView model = new ModelAndView("viewPortfolio");
+//
+//		log.debug("Getting portfolio Stocks for portfolio ID - " + hdportfolioId);
+//
+//		List<PortfolioStock> stocks = portfolioService.getStocksByPortfolio(hdportfolioId);
+//
+//		// model.addObject("portfolioStocks", stocks);
+//
+//		List<StockPerformance> performanceMatrix = null;
+//
+//		if (stocks != null && stocks.size() > 0) {
+//			try {
+//				performanceMatrix = stockService.getStockPerformance(stocks);
+//			} catch (IOException e) {
+//				log.error("Performance matrices could not be fetched.");
+//			}
+//
+//		}
+//
+//		model.addObject("performanceMatrix", performanceMatrix);
+//
+//		return model;
+//	}
+
 }
