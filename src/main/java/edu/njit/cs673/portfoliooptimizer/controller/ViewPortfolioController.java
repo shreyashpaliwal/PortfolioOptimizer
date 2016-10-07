@@ -39,6 +39,7 @@ public class ViewPortfolioController {
 
 		Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
 		session.setAttribute("portfolio", portfolio);
+		List<String> errorMessages = new ArrayList<String>();
 
 		ModelAndView model = new ModelAndView("viewPortfolio");
 
@@ -58,9 +59,14 @@ public class ViewPortfolioController {
 			}
 
 		}
+		if(stocks.isEmpty())
+		{
+			
+			errorMessages.add("No data for portfolio selected");
+		}
 
 		model.addObject("performanceMatrix", performanceMatrix);
-
+		model.addObject("errorMessages", errorMessages);
 		return model;
 	}
 }

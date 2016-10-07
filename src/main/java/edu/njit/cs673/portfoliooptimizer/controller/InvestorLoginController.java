@@ -45,7 +45,8 @@ public class InvestorLoginController {
 
 		Set<String> errors = new HashSet<String>();
 		List<String> portfolioSet = new ArrayList<String>();
-
+		
+		List<String> errorMessages = new ArrayList<String>();
 		// InvestorProfileVO vo = new InvestorProfileVO();
 
 		try {
@@ -54,7 +55,10 @@ public class InvestorLoginController {
 			errors.add(e.toString());
 			return model;
 		}
-
+		if (investor.equals(null))
+		{
+			errorMessages.add("Invalid user");
+		}
 		// vo.setFirstName(investor.getFirstName());
 		// vo.setLastName(investor.getLastName());
 		// vo.setInvestorId(investor.getInvestorId());
@@ -69,7 +73,7 @@ public class InvestorLoginController {
 
 		// model.addObject("investorProfileVO", vo);
 		// session.setAttribute("investorProfileVO", vo);
-
+		model.addObject("errorMessages",errorMessages);
 		session.setAttribute("investor", investor);
 		return model;
 	}
