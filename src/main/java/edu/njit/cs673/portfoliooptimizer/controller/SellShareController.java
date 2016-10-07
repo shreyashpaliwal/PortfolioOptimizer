@@ -2,6 +2,7 @@ package edu.njit.cs673.portfoliooptimizer.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -45,11 +46,17 @@ public class SellShareController {
 	
 	@RequestMapping(value = "/SellShare.htm", method = RequestMethod.GET)
 	public ModelAndView sellShare(@RequestParam(name = "portfolioId", required = true) int portfolioId) {
-
+		
+		List<String> errorMessages = new ArrayList<String>();
 		ModelAndView model = new ModelAndView("SellShare");
 		List<StockInventory> stocks = stockService.getStockFromInventory();
+		if(portfolioId == 0 || stocks.isEmpty())
+		{
+			errorMessages.add("stocks or portfolio id is missing");
+		}
 		model.addObject("portfolioId", portfolioId);
 		model.addObject("stocks", stocks);
+		model.addObject("errorMessages",errorMessages);
 		return model;
 	}
 
