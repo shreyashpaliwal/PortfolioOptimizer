@@ -87,12 +87,19 @@ body {
 
 	<div class="container">
 		<div>
+			<div style="margin-top: 20px;color: red;">
+				<ul type="square">
+				<c:forEach items="${errorMessages }" var="msg">
+					<li> ${msg} </li>
+				</c:forEach>
+				</ul>
+			</div>
 
 			<table>
 
 				<h2>Cash Balance: ${portfolio.cashBalance }</h2>
 				
-				<h2> portfolio ID: ${portfolio.portfolioId }</h2>
+				<!-- <h2> portfolio ID: ${portfolio.portfolioId }</h2> -->
 
 				<caption>,
 

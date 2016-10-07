@@ -31,7 +31,7 @@ public class PortfolioStockServiceImpl implements PortfolioStockService{
 		// TODO Auto-generated method stub
 		portfoliostockservice.addStocktoPortfolio(stockSymbol,shareQuantity,purchasePrice,portfolioID);
 		
-		portfolioDao.addCash(portfolioID, purchasePrice.multiply(new BigDecimal(shareQuantity)), true);
+		portfolioDao.addCash(portfolioID, purchasePrice.multiply(new BigDecimal(shareQuantity).negate()), true);
 		
 	}
 
