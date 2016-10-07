@@ -60,7 +60,20 @@ public class PortfolioStockDaoImpl implements PortfolioStockDao {
 	@Override
 	public void addStocktoPortfolio(String stockSymbol, int shareQuantity, BigDecimal purchasePrice, int portfolioID) {
 
-		String sql1 = "INSERT INTO PORTFOLIO_STOCK(PFL_STOCK_ID, PURCHASE_PRICE, SHARE_QUANTITY, STOCK_SYMBOL, PORTFOLIO_ID, STOCK_EXCHANGE_ID)values(portfolio_stock_seq.nextval, :stockSymbol,:shareQuantity,:purchasePrice,:Portfolio,1)";
+		String sql1 = "INSERT INTO PORTFOLIO_STOCK("
+				+ "PFL_STOCK_ID, "
+				+ "PURCHASE_PRICE, "
+				+ "SHARE_QUANTITY, "
+				+ "STOCK_SYMBOL, "
+				+ "PORTFOLIO_ID, "
+				+ "STOCK_EXCHANGE_ID)"
+				+ "values("
+				+ "PFL_STOCK_SEQ.nextval, "
+				+ ":purchasePrice,"
+				+ ":shareQuantity,"
+				+ ":stockSymbol,"				
+				+ ":Portfolio,"
+				+ "1)";
 		// String sql1 = "insert into PortfolioStock
 		// (portfolioStockId,stockSymbol,shareQuantity,purchasePrice,Portfolio)
 		// values(portfoliostock_seq.nextval,

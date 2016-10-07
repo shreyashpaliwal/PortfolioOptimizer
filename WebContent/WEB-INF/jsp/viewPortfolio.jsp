@@ -108,6 +108,7 @@ body {
 
 						<th>Symbol</th>
 
+						<th>Purchase Price</th>
 						<th>Last Price</th>
 
 						<th>Change</th>
@@ -132,7 +133,7 @@ body {
 							<%-- <th>${stock.stockSymbol }</th> --%>
 
 							<td>${perf.stock.stockSymbol}</td>
-
+							<td>${perf.stock.purchasePrice}</td>
 							<td>${perf.lastPrice}</td>
 							<td>${perf.change}</td>
 

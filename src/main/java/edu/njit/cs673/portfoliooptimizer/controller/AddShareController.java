@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,6 +28,8 @@ import edu.njit.cs673.portfoliooptimizer.service.PortfolioStockService;
 import edu.njit.cs673.portfoliooptimizer.service.StockService;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.histquotes.Interval;
 
 @Transactional
 @Controller
@@ -51,14 +54,27 @@ public class AddShareController {
 		// error list for validation
 		List<String> errorMessages = new ArrayList<String>();
 
-		if (stockSymbol.equals(null) || shareQuantity == 0) {
+		if (stockSymbol == null || shareQuantity == 0) {
 			errorMessages.add("stock symbol or quantity is not specified");
 		}
 		BigDecimal price = null ;
-		if (portfoliostock.equals(null)) {
-			URL	url = new URL(" http://finance.yahoo.com/quote/"+stockSymbol+"/history?period1=1473652800&period2=1473652800&interval=1d&filter=history&frequency=1d");
+		if (portfoliostock == null) {
+			/*URL	url = new URL(" http://finance.yahoo.com/quote/"+stockSymbol+"/history?period1=1473652800&period2=1473652800&interval=1d&filter=history&frequency=1d");
 			BufferedReader br= new BufferedReader(new InputStreamReader(url.openStream()));
-			String s = br.toString();
+			String s = br.toString();*/
+			
+			Calendar from = Calendar.getInstance();
+			from.set(2016, 8, 12);
+			
+			System.out.println(from.getTime());
+			Calendar to = Calendar.getInstance();
+			from.add(Calendar.HOUR, -1); // from 1 year ago
+			 
+			Stock stock = YahooFinance.get(stockSymbol);
+			List<HistoricalQuote> googleHistQuotes = stock.getHistory(from, to, Interval.DAILY);
+								
+			price=googleHistQuotes.get(googleHistQuotes.size()-1).getClose();
+			
 			
 		} else {
 
