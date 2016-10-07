@@ -55,7 +55,7 @@ public class PortfolioDaoImpl implements PortfolioDao {
 
 		Portfolio portfolio = template.get(Portfolio.class, portfolioId);
 
-		portfolio.setCashBalance(cash);
+		portfolio.setCashBalance(portfolio.getCashBalance().add(cash));
 
 		template.save(portfolio);
 

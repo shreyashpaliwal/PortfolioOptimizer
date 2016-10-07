@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 import edu.njit.c673.portfoliooptimizer.model.StockPerformance;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioService;
@@ -60,6 +61,10 @@ public class CashTransactionController {
 		
 		model.addObject("performanceMatrix", performanceMatrix);
 		model.addObject("errorMessages", errorMessages);
+		
+		
+		Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
+		session.setAttribute("portfolio", portfolio);
 		
 		return model;
 	}
