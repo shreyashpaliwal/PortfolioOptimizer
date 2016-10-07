@@ -1,4 +1,4 @@
-package edu.njit.c673.portfoliooptimizer.model;
+package edu.njit.cs673.portfoliooptimizer.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
+import edu.njit.c673.portfoliooptimizer.model.StockPerformance;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioService;
 import edu.njit.cs673.portfoliooptimizer.service.StockService;
 
@@ -28,7 +30,7 @@ private static final Logger log = Logger.getLogger(CashWithdrawController.class)
 	@Autowired
 	StockService stockService;
 	
-	@RequestMapping(name="/removeCash.htm", method=RequestMethod.GET)
+/*	@RequestMapping(name="/removeCash.htm", method=RequestMethod.GET)
 	public ModelAndView removeCash(@RequestParam int portfolioId, @RequestParam int cashAmount, HttpSession session){
 		
 		session.getAttribute("viewPortfolio");
@@ -55,5 +57,5 @@ private static final Logger log = Logger.getLogger(CashWithdrawController.class)
 		
 		return model;
 	}
-
+*/
 }

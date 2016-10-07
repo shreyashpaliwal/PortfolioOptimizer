@@ -94,7 +94,7 @@ body {
 				
 				<h2> portfolio ID: ${portfolio.portfolioId }</h2>
 
-				<caption>
+				<caption>,
 
 					<h3>Portfolio Performance!!</h3>
 
@@ -157,39 +157,43 @@ body {
 
 			</table>
 		</div>
-		</article>
-
-		<div>
-			<form action="${pageContext.request.contextPath}/addCash.htm">
-				<h3><br>
-					<label>Add Cash:</label> <input type="text" name="cashAmount"></input>
-					<input type="submit" value="deposit"></input><br><br>
-				</h3>
+		<br/>
+		<br/>
+			<form action="${pageContext.request.contextPath}/addCash.htm" style="border: 1px;">				
+				<div>	
+					<label>Add Cash:</label> <input type="text" name="cashAmount"></input>				
+				
+				<select name="withdraw">
+					<option value="false">Deposit</option>
+					<option value="true">Withdraw</option>					
+				</select>
+				
 				<input type="hidden" value="${portfolio.portfolioId}"
 					name="portfolioId" />
-			</form>
+				<input type="submit" value="Submit"></input>
+				</div>
+				<%-- <input type="hidden" value="false" name="withdraw">
 			
-			<form action="${pageContext.request.contextPath}/removeCash.htm">
 				<h3><br>
 					<label>Withdraw Cash:</label> <input type="text" name="cashAmount"></input>
 					<input type="submit" value="Withdraw"></input><br><br>
 				</h3>
 				<input type="hidden" value="${portfolio.portfolioId}"
 					name="portfolioId" />
+				<input type="hidden" value="true" name="withdraw"> --%>
 			</form>
-	</div>
-	
+	<br/><br/>
 	<div>
 		<form action="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}">
-			<input type="submit" value="BuyShare"></input><br>
+			<input type="submit" value="BuyShare"></input>
 			<input type="hidden" value="${portfolio.portfolioId}"
-					name="portfolioId" /> <br><br>
+					name="portfolioId" />
 		</form>		
 
 		<form action="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}">
-			<input type="submit" value="SellShare"></input><br>
+			<input type="submit" value="SellShare"></input>
 			<input type="hidden" value="${portfolio.portfolioId}"
-					name="portfolioId" /> <br><br>
+					name="portfolioId" />
 		</form>	
 	</div>	
 			

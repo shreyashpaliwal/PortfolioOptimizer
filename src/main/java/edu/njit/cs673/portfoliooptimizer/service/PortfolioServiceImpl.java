@@ -26,9 +26,9 @@ public class PortfolioServiceImpl implements PortfolioService {
 	}
 
 	@Override
-	public void addCash(int portfolioId, BigDecimal cash) {
+	public void addCash(int portfolioId, BigDecimal cash, boolean remove) {
 
-		portfolioDao.addCash(portfolioId, cash);
+		portfolioDao.addCash(portfolioId, cash, remove);
 		
 	}
 
@@ -46,10 +46,10 @@ public class PortfolioServiceImpl implements PortfolioService {
 		
 	}
 
-	@Override
+	/*@Override
 	public void removeCash(int portfolioId, BigDecimal cash) {
 		// TODO Auto-generated method stub
 		portfolioDao.removeCash(portfolioId, cash);
 		
-	}
+	}*/
 }

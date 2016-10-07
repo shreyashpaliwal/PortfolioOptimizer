@@ -33,7 +33,13 @@ public class CashTransactionController {
 	StockService stockService;
 	
 	@RequestMapping(name="/addCash.htm", method=RequestMethod.GET)
-	public ModelAndView addCash(@RequestParam int portfolioId, @RequestParam int cashAmount, HttpSession session){
+	public ModelAndView addCash(@RequestParam(name = "portfolioId") int portfolioId,
+			@RequestParam(name = "cashAmount") int cashAmount, HttpSession session,
+			@RequestParam(name = "withdraw") boolean withdraw) {
+		
+		if(withdraw){
+			cashAmount = cashAmount * -1;
+		}
 		
 		session.getAttribute("viewPortfolio");
 		
@@ -45,7 +51,7 @@ public class CashTransactionController {
 			errorMessages.add("portfolio ID or cash is null");
 		}
 		
-		portfolioService.addCash(portfolioId, new BigDecimal(cashAmount));
+		portfolioService.addCash(portfolioId, new BigDecimal(cashAmount), withdraw);
 		
 		log.debug("Getting portfolio Stocks for portfolio ID - " + portfolioId);
 
@@ -68,6 +74,5 @@ public class CashTransactionController {
 		
 		return model;
 	}
-	
 	
 }
