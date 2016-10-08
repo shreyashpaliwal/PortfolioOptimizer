@@ -9,6 +9,5 @@ public interface PortfolioValidationService {
 
 	public boolean validatePortfolio(Portfolio portfolio);
 	
-	public List<PortfolioStock> getStocklist(int stockMatketIdex);
 	
 }

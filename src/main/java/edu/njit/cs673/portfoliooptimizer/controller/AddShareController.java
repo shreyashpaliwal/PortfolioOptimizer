@@ -53,7 +53,13 @@ public class AddShareController {
 		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol, hdportfolioId);
 		// error list for validation
 		List<String> errorMessages = new ArrayList<String>();
+		//int qty = shareQuantity;
 
+		
+	
+		
+		
+		
 		if (stockSymbol == null || shareQuantity == 0) {
 			errorMessages.add("stock symbol or quantity is not specified");
 		}
@@ -84,6 +90,8 @@ public class AddShareController {
 
 			Stock stock = YahooFinance.get(stockSymbol);
 			price = stock.getQuote().getPrice();
+			//log.debug("Share quNTITY VALUE: " + shareQuantity);
+			
 		}
 		portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
 
