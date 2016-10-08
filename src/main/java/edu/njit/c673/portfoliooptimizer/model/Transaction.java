@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "TRANSACTION", schema = "snp59")
+@Table(name = "TRANSACTION", schema = "tmp33")
 public class Transaction implements Serializable {
 
 	private static final long serialVersionUID = -7647742592594081433L;
@@ -28,7 +28,7 @@ public class Transaction implements Serializable {
 	@Id
 	@Column(name = "TRANSACTION_ID")
 	@GeneratedValue(generator = "TRANSACTION_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(schema = "snp59", name = "TRANSACTION_SEQ", sequenceName = "TRANSACTION_SEQ", allocationSize = 1)
+	@SequenceGenerator(schema = "tmp33", name = "TRANSACTION_SEQ", sequenceName = "TRANSACTION_SEQ", allocationSize = 1)
 	private int transactionId;
 
 	@ManyToOne(fetch = FetchType.LAZY)

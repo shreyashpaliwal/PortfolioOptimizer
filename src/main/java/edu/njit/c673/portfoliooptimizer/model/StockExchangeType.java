@@ -11,7 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "STOCK_EXCHANGE_TYPE", schema = "snp59")
+@Table(name = "STOCK_EXCHANGE_TYPE", schema = "tmp33")
 public class StockExchangeType implements Serializable {
 
 	private static final long serialVersionUID = 8140980795821186400L;

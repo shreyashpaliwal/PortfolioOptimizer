@@ -45,8 +45,8 @@
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url"
 			value="jdbc:oracle:thin:@prophet.njit.edu:1521:course" />
-		<property name="username" value="snp59" />
-		<property name="password" value="1sepQCyx2" />
+		<property name="username" value="tmp33" />
+		<property name="password" value="sophism26" />
 		<property name="initialSize" value="5" />
 		<property name="maxActive" value="10" />
 	</bean>

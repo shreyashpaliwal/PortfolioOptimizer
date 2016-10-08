@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TRANSACTION_TYPE", schema = "snp59")
+@Table(name = "TRANSACTION_TYPE", schema = "tmp33")
 public class TransactionType implements Serializable {
 
 	private static final long serialVersionUID = -1553611478956249774L;
@@ -23,7 +23,7 @@ public class TransactionType implements Serializable {
 	@Id
 	@Column(name = "TXN_TYPE_ID")
 	@GeneratedValue(generator = "TXN_TYPE_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "TXN_TYPE_SEQ", sequenceName = "TXN_TYPE_SEQ", schema = "snp59", allocationSize = 1)
+	@SequenceGenerator(name = "TXN_TYPE_SEQ", sequenceName = "TXN_TYPE_SEQ", schema = "tmp33", allocationSize = 1)
 	private int transactionTypeId;
 
 	@Column(name = "DESCRIPTION", length = 50)
