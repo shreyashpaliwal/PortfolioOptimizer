@@ -25,8 +25,8 @@ tr:hover{background-color:#f5f5f5}
 				</td>
 				<td>
 					<select name = "stocklist">
-					<c:forEach items="${portStock}" var="perf">
-						<option  value="${perf.stockSymbol}">${perf.stockSymbol}</option>	
+					<c:forEach items="${portstocks}" var="perf">
+						<option  value="${perf}">${perf}</option>	
 					</c:forEach>
 						
 					</select>

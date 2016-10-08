@@ -9,8 +9,9 @@ public interface PortfolioStockService {
 
 	public PortfolioStock getPortfoliostockByStockSymbol(String stockSymbol,int portfolioID);
 	
-	public void addStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
+	public boolean addStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 	
 	public void sellStockPortfolio(String stockSymbol,int shareQuantity,BigDecimal sellPrice,int portfolioID);
 	
+	public boolean updateStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 }
