@@ -7,7 +7,10 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +33,7 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
+import yahoofinance.quotes.fx.FxQuote;
 
 //@Transactional
 @Controller
@@ -69,23 +73,20 @@ public class AddShareController {
 			System.out.println(from.getTime());
 			Calendar to = Calendar.getInstance();
 			from.add(Calendar.HOUR, -1); // from 1 year ago
-			 
+			
 			try{
 			Stock stock = YahooFinance.get(stockSymbol);			
 			List<HistoricalQuote> googleHistQuotes = stock.getHistory(from, to, Interval.DAILY);
 								
 			price=googleHistQuotes.get(googleHistQuotes.size()-1).getClose();
-			}catch( Exception e){
-				try{
-				Stock stock = YahooFinance.get(stockSymbol);
+			}catch( Exception e){								
+				Set<String> stocks = new HashSet<String>();
+				stocks.add(stockSymbol);
+				Map<String,Stock>  stockMap = stockService.getHistoricalDataForNSEStock(stocks);
+				Stock stock = stockMap.get(stockSymbol);
 				price = stock.getQuote().getPrice();
-				}
-				catch (Exception exception) {
-					// TODO: handle exception
-				}
-				finally {
-					price = new BigDecimal(100);
-				}
+				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
+				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
 			}
 			
 		} else {
@@ -94,11 +95,14 @@ public class AddShareController {
 			price = stock.getQuote().getPrice();
 			}
 			catch (Exception e) {
-				// TODO: handle exception
-			}
-			finally {
-				price = new BigDecimal(100);
-			}
+				Set<String> stocks = new HashSet<String>();
+				stocks.add(stockSymbol);
+				Map<String,Stock>  stockMap = stockService.getHistoricalDataForNSEStock(stocks);
+				Stock stock = stockMap.get(stockSymbol);
+				
+				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
+				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
+			}			
 		}
 		portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
 

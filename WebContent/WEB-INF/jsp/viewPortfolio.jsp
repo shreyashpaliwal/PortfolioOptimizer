@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -97,7 +99,7 @@ body {
 
 			<table>
 
-				<h2>Cash Balance: ${portfolio.cashBalance }</h2>
+				<h2>Cash Balance: ${portfolio.cashBalance } $</h2>
 				
 				<h2> portfolio ID: ${portfolio.portfolioId }</h2>
 
@@ -133,15 +135,30 @@ body {
 						<th>Overall return</th>
 
 					</tr>
-
 					<c:forEach items="${performanceMatrix}" var="perf">
+
 						<tr>
 
 							<%-- <th>${stock.stockSymbol }</th> --%>
 
 							<td>${perf.stock.stockSymbol}</td>
-							<td>${perf.stock.purchasePrice}</td>
-							<td>${perf.lastPrice}</td>
+							<td>
+								<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+								${perf.stock.purchasePrice} $								
+								</c:if>
+								<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+								${perf.stock.purchasePrice} $ / <fmt:formatNumber maxFractionDigits="2" groupingUsed="true" value="${perf.stock.purchasePrice * sessionScope.fxRate }" />  &#8377;								
+								</c:if>														
+							</td>
+							<td>
+							<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+								${perf.lastPrice} $								
+								</c:if>
+								<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+								${perf.lastPrice} $ / <fmt:formatNumber maxFractionDigits="2" groupingUsed="true" value="${perf.lastPrice * sessionScope.fxRate }" />  &#8377;
+																
+							</c:if>
+							</td>
 							<td>${perf.change}</td>
 
 							<td>${perf.stock.shareQuantity}</td>

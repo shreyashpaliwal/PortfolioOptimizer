@@ -1,5 +1,6 @@
 package edu.njit.cs673.portfoliooptimizer.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,8 @@ import edu.njit.c673.portfoliooptimizer.model.Investor;
 import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.cs673.portfoliooptimizer.exception.AuthenticationException;
 import edu.njit.cs673.portfoliooptimizer.service.LoginService;
+import yahoofinance.YahooFinance;
+import yahoofinance.quotes.fx.FxQuote;
 
 @Controller
 @Transactional
@@ -75,6 +78,15 @@ public class InvestorLoginController {
 		// session.setAttribute("investorProfileVO", vo);
 		model.addObject("errorMessages",errorMessages);
 		session.setAttribute("investor", investor);
+		
+		FxQuote inrUsdFx = null;
+		try {
+			inrUsdFx = YahooFinance.getFx("USDINR=X");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+		session.setAttribute("fxRate", inrUsdFx.getPrice().doubleValue());
+		
 		return model;
 	}
 
