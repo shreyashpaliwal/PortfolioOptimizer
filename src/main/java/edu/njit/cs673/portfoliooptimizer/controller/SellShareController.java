@@ -50,12 +50,15 @@ public class SellShareController {
 		List<String> errorMessages = new ArrayList<String>();
 		ModelAndView model = new ModelAndView("SellShare");
 		List<StockInventory> stocks = stockService.getStockFromInventory();
+		List<PortfolioStock> portstocks = portfolioService.getStocksByPortfolio(portfolioId);
+
 		if(portfolioId == 0 || stocks.isEmpty())
 		{
 			errorMessages.add("stocks or portfolio id is missing");
 		}
 		model.addObject("portfolioId", portfolioId);
 		model.addObject("stocks", stocks);
+		model.addObject("portStock",portstocks);
 		model.addObject("errorMessages",errorMessages);
 		return model;
 	}

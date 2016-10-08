@@ -19,6 +19,7 @@ import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 import edu.njit.c673.portfoliooptimizer.model.StockPerformance;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioService;
+import edu.njit.cs673.portfoliooptimizer.service.PortfolioValidationService;
 import edu.njit.cs673.portfoliooptimizer.service.StockService;
 
 @Transactional
@@ -33,14 +34,23 @@ public class ViewPortfolioController {
 	@Autowired
 	StockService stockService;
 
+	@Autowired
+	PortfolioValidationService portfolioValidationService;
+	
 	@RequestMapping(value = "/getPortfolioDetails.htm", method = RequestMethod.GET)
 	public ModelAndView getStockDetails(@RequestParam(name = "portfolioId", required = true) int portfolioId,
 			HttpSession session) {
 
-		Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
+		Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);			
+		
 		session.setAttribute("portfolio", portfolio);
 		List<String> errorMessages = new ArrayList<String>();
 
+		
+		if(! portfolioValidationService.validatePortfolio(portfolio)){
+			errorMessages.add("Unbalanced Portfolio. 70-30 rule failed!");
+		}
+		
 		ModelAndView model = new ModelAndView("viewPortfolio");
 
 		log.debug("Getting portfolio Stocks for portfolio ID - " + portfolioId);

@@ -11,4 +11,6 @@ public interface PortfolioStockService {
 	
 	public void addStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 	
+	public void sellStockPortfolio(String stockSymbol,int shareQuantity,BigDecimal sellPrice,int portfolioID);
+	
 }

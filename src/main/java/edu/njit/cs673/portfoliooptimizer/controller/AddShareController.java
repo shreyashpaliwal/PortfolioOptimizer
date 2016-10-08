@@ -31,7 +31,7 @@ import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
-@Transactional
+//@Transactional
 @Controller
 public class AddShareController {
 	Logger log = Logger.getLogger(AddShareController.class);
@@ -70,16 +70,36 @@ public class AddShareController {
 			Calendar to = Calendar.getInstance();
 			from.add(Calendar.HOUR, -1); // from 1 year ago
 			 
-			Stock stock = YahooFinance.get(stockSymbol);
+			try{
+			Stock stock = YahooFinance.get(stockSymbol);			
 			List<HistoricalQuote> googleHistQuotes = stock.getHistory(from, to, Interval.DAILY);
 								
 			price=googleHistQuotes.get(googleHistQuotes.size()-1).getClose();
+			}catch( Exception e){
+				try{
+				Stock stock = YahooFinance.get(stockSymbol);
+				price = stock.getQuote().getPrice();
+				}
+				catch (Exception exception) {
+					// TODO: handle exception
+				}
+				finally {
+					price = new BigDecimal(100);
+				}
+			}
 			
 			
 		} else {
-
+			try{
 			Stock stock = YahooFinance.get(stockSymbol);
 			price = stock.getQuote().getPrice();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally {
+				price = new BigDecimal(100);
+			}
 		}
 		portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
 

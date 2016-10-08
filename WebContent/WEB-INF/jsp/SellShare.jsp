@@ -18,8 +18,8 @@
 				</td>
 				<td>
 					<select name = "stocklist">
-					<c:forEach items="${stocks}" var="perf">
-						<option  value="${perf.stockSymbol}">${perf.stockName}</option>	
+					<c:forEach items="${portStock}" var="perf">
+						<option  value="${perf.stockSymbol}">${perf.stockSymbol}</option>	
 					</c:forEach>
 						
 					</select>
