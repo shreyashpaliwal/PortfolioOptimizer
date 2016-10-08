@@ -88,7 +88,6 @@ public class AddShareController {
 				}
 			}
 			
-			
 		} else {
 			try{
 			Stock stock = YahooFinance.get(stockSymbol);
