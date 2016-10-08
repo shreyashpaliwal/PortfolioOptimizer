@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "PORTFOLIO", schema = "SNP59")
+@Table(name = "PORTFOLIO", schema = "snp59")
 public class Portfolio implements Serializable {
 
 	private static final long serialVersionUID = -5287002849051018683L;
@@ -29,7 +29,7 @@ public class Portfolio implements Serializable {
 	@Id
 	@Column(name = "PORTFOLIO_ID")
 	@GeneratedValue(generator = "PORTFOLIO_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "PORTFOLIO_SEQ", sequenceName = "PORTFOLIO_SEQ", schema = "SNP59", allocationSize = 1)
+	@SequenceGenerator(name = "PORTFOLIO_SEQ", sequenceName = "PORTFOLIO_SEQ", schema = "snp59", allocationSize = 1)
 	private int portfolioId;
 
 	@JoinColumn(name = "INVESTOR_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_INVST_PFL") )
