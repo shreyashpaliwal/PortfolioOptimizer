@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "INVESTOR", schema = "SNP59")
+@Table(name = "INVESTOR", schema = "snp59")
 public class Investor implements Serializable {
 
 	private static final long serialVersionUID = 7736966193418047297L;
@@ -25,7 +25,7 @@ public class Investor implements Serializable {
 	@Id
 	@Column(name = "INVESTOR_ID")
 	@GeneratedValue(generator = "INVESTOR_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(schema = "SNP59", name = "INVESTOR_SEQ", sequenceName = "INVESTOR_SEQ", allocationSize = 1)
+	@SequenceGenerator(schema = "snp59", name = "INVESTOR_SEQ", sequenceName = "INVESTOR_SEQ", allocationSize = 1)
 	private int investorId;
 
 	@Column(name = "FIRST_NAME", length = 20)

@@ -7,6 +7,7 @@ public class StockPerformance {
 	private PortfolioStock stock;
 	private String stockSymbol;
 	private BigDecimal lastPrice;
+	private BigDecimal shares;
 	private BigDecimal change;
 	private BigDecimal costBasis;
 	private BigDecimal marketValue;
@@ -93,6 +94,14 @@ public class StockPerformance {
 
 	public void setStock(PortfolioStock stock) {
 		this.stock = stock;
+	}
+
+	public BigDecimal getShares() {
+		return shares;
+	}
+
+	public void setShares(BigDecimal shares) {
+		this.shares = shares;
 	}
 
 }

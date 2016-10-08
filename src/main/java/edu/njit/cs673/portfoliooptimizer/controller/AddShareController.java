@@ -54,14 +54,21 @@ public class AddShareController {
 			@RequestParam(name = "stocklist") String stockSymbol,
 			@RequestParam(name = "shareQuantity") int shareQuantity, HttpSession session) throws IOException {
 
+		
 		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol, hdportfolioId);
 		// error list for validation
 		List<String> errorMessages = new ArrayList<String>();
-
+		boolean b = true;
+		String msg = "Insufficient Balance";
+		
+	
+		
+		
+		
 		if (stockSymbol == null || shareQuantity == 0) {
 			errorMessages.add("stock symbol or quantity is not specified");
 		}
-		BigDecimal price = null ;
+		BigDecimal price = new BigDecimal(10) ;
 		if (portfoliostock == null) {
 			/*URL	url = new URL(" http://finance.yahoo.com/quote/"+stockSymbol+"/history?period1=1473652800&period2=1473652800&interval=1d&filter=history&frequency=1d");
 			BufferedReader br= new BufferedReader(new InputStreamReader(url.openStream()));
@@ -88,7 +95,10 @@ public class AddShareController {
 				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
 				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
 			}
+			b = portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
 			
+			
+				
 		} else {
 			try{
 			Stock stock = YahooFinance.get(stockSymbol);
@@ -103,8 +113,10 @@ public class AddShareController {
 				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
 				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
 			}			
+			
+			b = portfoliostockService.updateStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
 		}
-		portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
+		
 
 		/// http://finance.yahoo.com/quote/MS/history?period1=1473652800&period2=1473652800&interval=1d&filter=history&frequency=1d
 
@@ -131,7 +143,14 @@ public class AddShareController {
 		} else {
 			errorMessages.add("Server Error loading the page");
 		}
-
+		if(!b)
+			errorMessages.add(msg);
+		else
+		{
+			msg = "Successfull Buy..!";
+			//model.addObject("BuyFail",msg);
+			errorMessages.add(msg);
+		}
 		model.addObject("performanceMatrix", performanceMatrix);
 		model.addObject("errorMessages", errorMessages);
 

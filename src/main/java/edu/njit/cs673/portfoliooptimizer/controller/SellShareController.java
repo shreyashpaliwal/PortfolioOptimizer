@@ -3,6 +3,7 @@ package edu.njit.cs673.portfoliooptimizer.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -48,17 +49,24 @@ public class SellShareController {
 	public ModelAndView sellShare(@RequestParam(name = "portfolioId", required = true) int portfolioId) {
 		
 		List<String> errorMessages = new ArrayList<String>();
+		HashSet<String> stockset = new HashSet<String>();
 		ModelAndView model = new ModelAndView("SellShare");
 		List<StockInventory> stocks = stockService.getStockFromInventory();
-		List<PortfolioStock> portstocks = portfolioService.getStocksByPortfolio(portfolioId);
-
+		List <PortfolioStock> portstocks = portfolioService.getStocksByPortfolio(portfolioId);
 		if(portfolioId == 0 || stocks.isEmpty())
 		{
 			errorMessages.add("stocks or portfolio id is missing");
 		}
+		
+		if(!portstocks.isEmpty()){
+			for (PortfolioStock port : portstocks)
+			{
+				stockset.add(port.getStockSymbol());
+			}
+		}
 		model.addObject("portfolioId", portfolioId);
 		model.addObject("stocks", stocks);
-		model.addObject("portStock",portstocks);
+		model.addObject("portstocks", stockset);
 		model.addObject("errorMessages",errorMessages);
 		return model;
 	}

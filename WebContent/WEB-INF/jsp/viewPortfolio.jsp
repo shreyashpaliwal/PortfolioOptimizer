@@ -7,6 +7,7 @@
 <html>
 <head>
 <style>
+
 div.container {
 	width: 100%;
 	border: 1px solid gray;
@@ -67,20 +68,22 @@ table, th, td {
 	border-collapse: collapse;
 	text-align: left;
 }
+
+
+tr:nth-child(even){background-color: #f2f2f2}
+
 </style>
 
 <style type="text/css">
-html, body {
-	width: 100%;
-	height: 100%;
-	margin: 0px;
-}
+    
+
 
 body {
 	transform: perspective(1400px)
 		matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	transform-style: preserve-3d;
-	background-color: transparent;
+	background-image:url(" ${pageContext.request.contextPath}/images/e.jpg");
+	background-size: 100% 100%;
 }
 </style>
 
@@ -105,7 +108,7 @@ body {
 
 				<caption>,
 
-					<h3>Portfolio Performance!!</h3>
+					<h3><u>Portfolio Performance!!</u></h3>
 
 				</caption>
 

@@ -114,6 +114,7 @@ public class StockServiceImpl implements StockService {
 					gainper = (gain.divide(buyPrice,RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
 					stockPerformance.setGainPercentage(gainper);
 					stockPerformance.setOverallReturn(gainper);
+					stockPerformance.setShares(stockQuantity);
 					
 				}												
 

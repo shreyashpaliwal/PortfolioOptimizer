@@ -6,20 +6,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<style>
+body {
+	background-color : lightblue;
+}
+tr:hover{background-color:#f5f5f5}
+
+</style>
 </head>
 <body>
 	<form action="${pageContext.request.contextPath}/updateSellShare.htm"
 		method="post">
 		<input type="hidden" value="${portfolioId}" name="hdportfolioId">
-		<table>
+		<table align="center">
 			<tr>
 				<td>
 				select share:
 				</td>
 				<td>
 					<select name = "stocklist">
-					<c:forEach items="${portStock}" var="perf">
-						<option  value="${perf.stockSymbol}">${perf.stockSymbol}</option>	
+					<c:forEach items="${portstocks}" var="perf">
+						<option  value="${perf}">${perf}</option>	
 					</c:forEach>
 						
 					</select>

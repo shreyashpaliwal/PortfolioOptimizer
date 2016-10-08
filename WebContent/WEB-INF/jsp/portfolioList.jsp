@@ -6,6 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Portfolio List</title>
+<style>
+body {
+                background-image: url("${pageContext.request.contextPath}/images/c.jpg");
+        
+    
+}
+</style>
 </head>
 <body>
 	<div>

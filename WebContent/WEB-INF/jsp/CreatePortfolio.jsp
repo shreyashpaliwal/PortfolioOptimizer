@@ -5,11 +5,30 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<style>
+
+
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+tr:hover{background-color:#f5f5f5}
+
+table.center {
+    text-align: center;
+    color: red;
+}
+body {
+    background-image: url("${pageContext.request.contextPath}/images/a.gif");
+}
+</style>
 </head>
 <body>
 	<form action="${pageContext.request.contextPath}/SavePortfolio.htm"
 		method="get">
-		<table>
+		<table align="center">
 			<tr>
 				<td><label for= "txtPortfolioName">Portfolio Name:</label></td>
 				<td><input type="text" id="txtPortfolioName"
@@ -23,8 +42,8 @@
 					name="portfoliodescription" /></td>
 			</tr>
 			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" id="btnSavePortfolio"
+				
+				<td colspan="2"><input type="submit" id="btnSavePortfolio"
 					name="createPortfolio" value="Create Portfolio" /></td>
 			</tr>
 

@@ -67,7 +67,7 @@ public class ViewPortfolioController {
 			} catch (IOException e) {
 				log.error("Performance matrices could not be fetched.");
 			}
-
+			
 		}
 		if(stocks.isEmpty())
 		{
