@@ -99,7 +99,7 @@ body {
 
 				<h2>Cash Balance: ${portfolio.cashBalance }</h2>
 				
-				<!-- <h2> portfolio ID: ${portfolio.portfolioId }</h2> -->
+				<h2> portfolio ID: ${portfolio.portfolioId }</h2>
 
 				<caption>,
 

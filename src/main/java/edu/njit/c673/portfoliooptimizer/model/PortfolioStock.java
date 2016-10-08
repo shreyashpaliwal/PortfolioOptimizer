@@ -17,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PORTFOLIO_STOCK", schema = "SNP59")
+@Table(name = "PORTFOLIO_STOCK", schema = "snp59")
 public class PortfolioStock implements Serializable {
 
 	private static final long serialVersionUID = -6277389320797095383L;
@@ -25,7 +25,7 @@ public class PortfolioStock implements Serializable {
 	@Id
 	@Column(name = "PFL_STOCK_ID")
 	@GeneratedValue(generator = "PFL_STOCK_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(schema = "SNP59", name = "PFL_STOCK_SEQ", sequenceName = "PFL_STOCK_SEQ", allocationSize = 1)
+	@SequenceGenerator(schema = "snp59", name = "PFL_STOCK_SEQ", sequenceName = "PFL_STOCK_SEQ", allocationSize = 1)
 	private int portfolioStockId;
 
 	@JoinColumn(name = "PORTFOLIO_ID", foreignKey = @ForeignKey(name = "FK_PFL_STK") )
@@ -42,7 +42,7 @@ public class PortfolioStock implements Serializable {
 	@Column(name = "SHARE_QUANTITY", precision = 10)
 	private BigDecimal shareQuantity;
 
-	@Column(name = "PURCHASE_PRICE", precision = 10)
+	@Column(name = "PURCHASE_PRICE", precision = 10,scale = 2)
 	private BigDecimal purchasePrice;
 
 	public int getPortfolioStockId() {

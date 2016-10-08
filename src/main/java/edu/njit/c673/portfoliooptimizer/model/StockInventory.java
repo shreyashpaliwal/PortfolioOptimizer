@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "STOCK_INVENTORY", schema = "SNP59")
+@Table(name = "STOCK_INVENTORY", schema = "snp59")
 public class StockInventory implements Serializable {
 
 	private static final long serialVersionUID = -6329700262003901201L;
@@ -23,7 +23,7 @@ public class StockInventory implements Serializable {
 	@Id
 	@Column(name = "STOCK_INVENTORY_ID")
 	@GeneratedValue(generator = "STOCK_INVENTORY_SEQ", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "STOCK_INVENTORY_SEQ", sequenceName = "STOCK_INVENTORY_SEQ", schema = "SNP59", allocationSize = 1)
+	@SequenceGenerator(name = "STOCK_INVENTORY_SEQ", sequenceName = "STOCK_INVENTORY_SEQ", schema = "snp59", allocationSize = 1)
 	private int stockId;
 
 	@OneToOne(fetch = FetchType.LAZY)

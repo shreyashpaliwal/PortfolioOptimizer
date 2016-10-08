@@ -69,6 +69,36 @@ public class PortfolioDaoImpl implements PortfolioDao {
 			{
 				log.error("Cannot withdraw cash greater than deposited amount : " +cash);				
 			}			
+		}else{		
+			
+		Portfolio portfolio = template.get(Portfolio.class, portfolioId);
+
+		portfolio.setCashBalance(portfolio.getCashBalance().add(cash));
+
+		template.save(portfolio);
+		}
+	}
+	
+	
+	@Override
+	public void removeCash(int portfolioId, BigDecimal cash, boolean remove) {
+
+		if(remove){
+			
+			Portfolio portfolio = template.get(Portfolio.class, portfolioId);
+			
+			BigDecimal cashBalance = portfolio.getCashBalance();
+			if(cashBalance.compareTo(cash.negate()) >= 0)
+			{
+				cashBalance = cashBalance.add(cash);
+			portfolio.setCashBalance(cashBalance);
+
+			template.save(portfolio);
+			}
+			else 
+			{
+				log.error("Cannot withdraw cash greater than deposited amount : " +cash);				
+			}			
 		}else{				
 		Portfolio portfolio = template.get(Portfolio.class, portfolioId);
 

@@ -1,4 +1,4 @@
-/*package edu.njit.cs673.portfoliooptimizer.vo;
+package edu.njit.cs673.portfoliooptimizer.vo;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Test {
 
 	public boolean validatePortfolio(Portfolio p) {
 
-		//Portfolio portfolio = null;
+	/*	//Portfolio portfolio = null;
 		// Portfolio portfolio = dao.getPortfolio();
 		List<StockInventory> stockdow30 = new ArrayList<>();
 		stockdow30 = getStocklist(1,p);
@@ -30,10 +30,11 @@ public class Test {
 			return true;
 		} else {
 			return false;
-		}
+		}*/
+		return false;
 	}
 	
-	public List<StockInventory> getStocklist(int stockMatketIdex,Portfolio p) {
+	/*public List<StockInventory> getStocklist(int stockMatketIdex,Portfolio p) {
 		
 		List<StockInventory> stock = new ArrayList<>();
 		//stock = p.getStocks();
@@ -49,12 +50,12 @@ public class Test {
 		
 		
 		return stock;
-	}
+	}*/
 	
 	public static void main(String[] args) {
 	
 		Test test = new Test();
-		Portfolio p = new Portfolio();
+/*		Portfolio p = new Portfolio();
 		Investor inv = new Investor();
 		inv.setInvestorId(1);
 		inv.setFirstName("Tejas");
@@ -162,7 +163,11 @@ public class Test {
 		inv.setPortfolios(portfolios);
 		
 		Boolean b = test.validatePortfolio(p);
-		System.out.println("portfolio is" + b);
+		System.out.println("portfolio is" + b);*/
+		
+		BigDecimal num1 = new BigDecimal("300.5");
+		BigDecimal num2 = new BigDecimal("1000.5");
+		
+		System.out.println(num1.compareTo(num2));
 	}
 }
-*/
