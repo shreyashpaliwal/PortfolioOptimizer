@@ -1,7 +1,12 @@
 <html>
 <head>
+body {
+	background-color : lightblue;
+}
 </head>
+<script>
 
+</script>
 <body>
 
 	<h1>Username: ${investorProfileVO.username }</h1>
