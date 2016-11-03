@@ -59,12 +59,15 @@ public class CashTransactionController {
 		//model.addObject("portfolioStocks", stocks);
 
 		List<StockPerformance> performanceMatrix = null;
-		try {
-			performanceMatrix = stockService.getStockPerformance(stocks);
-		} catch (IOException e) {
-			log.error("Performance matrices could not be fetched.");
-		}		
 		
+		if(stocks != null && stocks.size() > 0)
+		{
+			try {
+				performanceMatrix = stockService.getStockPerformance(stocks);
+			} catch (IOException e) {
+				log.error("Performance matrices could not be fetched.");
+			}		
+		}
 		model.addObject("performanceMatrix", performanceMatrix);
 		model.addObject("errorMessages", errorMessages);
 		

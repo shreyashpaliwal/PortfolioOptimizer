@@ -45,11 +45,9 @@ public class ViewPortfolioController {
 		
 		session.setAttribute("portfolio", portfolio);
 		List<String> errorMessages = new ArrayList<String>();
-
+			
+		errorMessages.addAll(portfolioValidationService.validatePortfolio(portfolio));
 		
-		if(! portfolioValidationService.validatePortfolio(portfolio)){
-			errorMessages.add("Unbalanced Portfolio. 70-30 rule failed!");
-		}
 		
 		ModelAndView model = new ModelAndView("viewPortfolio");
 

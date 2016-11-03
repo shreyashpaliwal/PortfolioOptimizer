@@ -28,6 +28,7 @@ import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 import edu.njit.c673.portfoliooptimizer.model.StockPerformance;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioService;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioStockService;
+import edu.njit.cs673.portfoliooptimizer.service.PortfolioValidationService;
 import edu.njit.cs673.portfoliooptimizer.service.StockService;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -48,6 +49,9 @@ public class AddShareController {
 
 	@Autowired
 	PortfolioStockService portfoliostockService;
+	
+	@Autowired
+	PortfolioValidationService portfolioValidationService;
 
 	@RequestMapping(value = "/addShare.htm", method = RequestMethod.POST)
 	public ModelAndView addShare(@RequestParam(name = "hdportfolioId") int hdportfolioId,
@@ -153,6 +157,8 @@ public class AddShareController {
 		}
 		model.addObject("performanceMatrix", performanceMatrix);
 		model.addObject("errorMessages", errorMessages);
+		
+		errorMessages.addAll(portfolioValidationService.validatePortfolio(portfolio));
 
 		return model;
 	}

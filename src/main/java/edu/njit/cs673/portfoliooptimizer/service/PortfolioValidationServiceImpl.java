@@ -2,6 +2,7 @@ package edu.njit.cs673.portfoliooptimizer.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -26,11 +27,15 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 	StockService stockService;
 	
 	@Override
-	public boolean validatePortfolio(Portfolio portfolio) {
+	public List<String> validatePortfolio(Portfolio portfolio) {
 
-		if (portfolio == null || portfolio.getStocks() == null || portfolio.getStocks().size() == 0) {
-			return false;
-		}
+		List<String> validationErrors = new ArrayList<>();
+		
+		//boolean returnType = true;
+		
+		/*if (portfolio == null || portfolio.getStocks() == null || portfolio.getStocks().size() == 0) {
+			returnType = false;
+		}*/
 
 		log.info("Validation portfolio - " + portfolio.getPortfolioId());
 
@@ -115,19 +120,18 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 
 		if (availBalance > 10000) {
 			
-			log.debug("Portfolio unbalanced due to Cash more than 10000$ ");
-			return false;
-		} else if (Math.ceil(dow30SharePercentage) > 70 || Math.floor(nifty50SharePercentage) < 30) {
+			log.debug("Portfolio unbalanced due to Cash more than $10,000 ");
+			validationErrors.add("Portfolio unbalanced due to Cash more than $10,000 ");			
+		} 
+		if (Math.ceil(dow30SharePercentage) > 70 || Math.floor(nifty50SharePercentage) < 30) {
 			log.debug("Portfolio unbalanced due to 70-30 rule failed ");
-			return false;
-		} else if (totalShareCount < 7 || totalShareCount > 9)
+			validationErrors.add("Portfolio unbalanced due to 70-30 rule failed ");
+		} 
+		if (totalShareCount < 7 || totalShareCount > 9)
 		{
 			log.debug("Portfolio unbalanced due to min-max stocks");
-			return false;
-		} else {
-			return true;
-		}
-
+			validationErrors.add("Portfolio unbalanced due to min-max stocks");			
+		} 
 		// int total = stockdow30.size() + stocknifty50.size();
 		// float dow30Share = (stockdow30.size() / total) * 100;
 		// float nif50Share = (stocknifty50.size() / total) * 100;
@@ -136,6 +140,7 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 		 * if (dow30Share == 70.00 && nif50Share == 30.00 && availBalance <
 		 * 1000) { return true; } else { return false; }
 		 */
+		return validationErrors;
 	}
 
 	

@@ -7,7 +7,7 @@ import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 
 public interface PortfolioValidationService {
 
-	public boolean validatePortfolio(Portfolio portfolio);
+	public List<String> validatePortfolio(Portfolio portfolio);
 	
 	
 }
