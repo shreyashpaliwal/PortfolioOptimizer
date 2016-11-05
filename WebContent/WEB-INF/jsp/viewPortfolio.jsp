@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <style>
-
+html { font-family: "calibri", Garamond, 'Comic Sans MS'; }
 div.container {
-	width: 100%;
-	border: 1px solid gray;
+	width: 100%;	
 }
 
 header, footer {
@@ -37,8 +36,7 @@ nav ul a {
 }
 
 article {
-	margin-left: 200px;
-	border-left: 1px solid gray;
+	margin-left: 200px;	
 	padding: 5em;
 	overflow: hidden;
 }
@@ -69,21 +67,18 @@ table, th, td {
 	text-align: left;
 }
 
-
-tr:nth-child(even){background-color: #f2f2f2}
-
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
 </style>
 
 <style type="text/css">
-    
-
-
-body {
-	transform: perspective(1400px)
-		matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-	transform-style: preserve-3d;
-	background-image:url(" ${pageContext.request.contextPath}/images/e.jpg");
+body {	
+	background-image:
+		url(" ${pageContext.request.contextPath}/images/e.jpg");
 	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: bottom;
 }
 </style>
 
@@ -92,23 +87,26 @@ body {
 
 	<div class="container">
 		<div>
-			<div style="margin-top: 20px;color: red;">
+			<div style="margin-top: 20px; color: red;">
 				<ul type="square">
-				<c:forEach items="${errorMessages }" var="msg">
-					<li> ${msg} </li>
-				</c:forEach>
+					<c:forEach items="${errorMessages }" var="msg">
+						<li>${msg}</li>
+					</c:forEach>
 				</ul>
 			</div>
 
 			<table>
 
 				<h2>Cash Balance: ${portfolio.cashBalance } $</h2>
-				
-				<h2> portfolio ID: ${portfolio.portfolioId }</h2>
 
-				<caption>,
+				<h2>portfolio ID: ${portfolio.portfolioId }</h2>
 
-					<h3><u>Portfolio Performance!!</u></h3>
+				<caption>
+					,
+
+					<h3>
+						<u>Portfolio Performance!!</u>
+					</h3>
 
 				</caption>
 
@@ -145,23 +143,25 @@ body {
 							<%-- <th>${stock.stockSymbol }</th> --%>
 
 							<td>${perf.stock.stockSymbol}</td>
-							<td>
-								<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+							<td><c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
 								${perf.stock.purchasePrice} $								
-								</c:if>
-								<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
-								${perf.stock.purchasePrice} $ / <fmt:formatNumber maxFractionDigits="2" groupingUsed="true" value="${perf.stock.purchasePrice * sessionScope.fxRate }" />  &#8377;								
-								</c:if>														
-							</td>
-							<td>
-							<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+								</c:if> <c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+								${perf.stock.purchasePrice} $ / <fmt:formatNumber
+										maxFractionDigits="2" groupingUsed="true"
+										value="${perf.stock.purchasePrice * sessionScope.fxRate }" />  &#8377;								
+								</c:if></td>
+							<td><c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
 								${perf.lastPrice} $								
-								</c:if>
-								<c:if test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
-								${perf.lastPrice} $ / <fmt:formatNumber maxFractionDigits="2" groupingUsed="true" value="${perf.lastPrice * sessionScope.fxRate }" />  &#8377;
+								</c:if> <c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+								${perf.lastPrice} $ / <fmt:formatNumber maxFractionDigits="2"
+										groupingUsed="true"
+										value="${perf.lastPrice * sessionScope.fxRate }" />  &#8377;
 																
-							</c:if>
-							</td>
+							</c:if></td>
 							<td>${perf.change}</td>
 
 							<td>${perf.stock.shareQuantity}</td>
@@ -184,22 +184,25 @@ body {
 
 			</table>
 		</div>
-		<br/>
-		<br/>
-			<form action="${pageContext.request.contextPath}/addCash.htm" style="border: 1px;">				
-				<div>	
-					<label>Add Cash:</label> <input type="text" name="cashAmount"></input>				
-				
-				<select name="withdraw">
-					<option value="false">Deposit</option>
-					<option value="true">Withdraw</option>					
-				</select>
-				
+		<br /> <br />
+		<table border="0">
+		<tr>
+		<th>
+		<form action="${pageContext.request.contextPath}/addCash.htm"
+			style="width: 350px; margin-top: 5px; margin-bottom: 5px; margin-left: 10px; margin-right: 10px;display: block;">
+			<div style="padding: 10px;">
+				<h3 align="center" style="margin-bottom: 10px;">CA$H TRAN$ACTION</h3>
+				<label>Amount (in US $):</label> <input type="text" name="cashAmount"></input>
+				<br/>
+				<label>Transaction Type:</label>
+				<input type="radio" name="withdraw" value="false" checked="checked"><label
+					for="false">Deposit</label></input> <input type="radio" name="withdraw"
+					value="true"><label for="true">Withdraw</label></input>
+									
 				<input type="hidden" value="${portfolio.portfolioId}"
-					name="portfolioId" />
-				<input type="submit" value="Submit"></input>
-				</div>
-				<%-- <input type="hidden" value="false" name="withdraw">
+					name="portfolioId" /> <br/><input type="submit" value="Submit" style="text-align: center;display: block;"></input>					
+			</div>
+			<%-- <input type="hidden" value="false" name="withdraw">
 			
 				<h3><br>
 					<label>Withdraw Cash:</label> <input type="text" name="cashAmount"></input>
@@ -208,23 +211,31 @@ body {
 				<input type="hidden" value="${portfolio.portfolioId}"
 					name="portfolioId" />
 				<input type="hidden" value="true" name="withdraw"> --%>
+		</form>
+		</th>
+		<th>
+			<div style="padding: 10px; width: 350px; margin-top: 5px; 
+				margin-bottom: 5px; margin-left: 10px; margin-right: 10px; 
+				display: block;">
+						<h3 align="center" style="margin-bottom: 10px;">$TOCK TRAN$ACTION</h3>
+						<form
+				action="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}">
+				<input type="submit" value="BuyShare"></input> <input type="hidden"
+					value="${portfolio.portfolioId}" name="portfolioId" />
 			</form>
-	<br/><br/>
-	<div>
-		<form action="${pageContext.request.contextPath}/BuyShare.htm?portfolioId=${portfolio.portfolioId}">
-			<input type="submit" value="BuyShare"></input>
-			<input type="hidden" value="${portfolio.portfolioId}"
-					name="portfolioId" />
-		</form>		
 
-		<form action="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}">
-			<input type="submit" value="SellShare"></input>
-			<input type="hidden" value="${portfolio.portfolioId}"
-					name="portfolioId" />
-		</form>	
-	</div>	
-			
-	</div>
+			<form
+				action="${pageContext.request.contextPath}/SellShare.htm?portfolioId=${portfolio.portfolioId}">
+				<input type="submit" value="SellShare"></input> <input type="hidden"
+					value="${portfolio.portfolioId}" name="portfolioId" />
+			</form>
+						
+			</div>
+				</th>
+		</tr>		
+		</table>		
+		</div>
+
 
 </body>
 </html>

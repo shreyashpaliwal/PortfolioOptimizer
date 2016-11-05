@@ -7,10 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Portfolio List</title>
 <style>
+html { font-family: "calibri", Garamond, 'Comic Sans MS'; }
 body {
                 background-image: url("${pageContext.request.contextPath}/images/c.jpg");
-        
-    
+                background-repeat: no-repeat;
+                background-size: cover; 
+                background-position: center;  
 }
 </style>
 </head>
@@ -18,9 +20,8 @@ body {
 	<div>
 		<form action="${pageContext.request.contextPath}/CreatePortfolio.htm"
 			method="post">
-			<h1>Hello ${sessionScope.investor.firstName }</h1>
-			<br> <br>
-			<hr>
+			<div style="width: 500px;margin-left: 200px;margin-top: 50px;">
+			<h1>Hello ${sessionScope.investor.firstName }</h1>						
 			<input type="submit" title="Create Portfolio" name="btnPortfolio" value="New Portfolio">
 
 			<p>Please select from the list of portfolios below.</p>
@@ -31,6 +32,7 @@ body {
 						href="${pageContext.request.contextPath}/getPortfolioDetails.htm?portfolioId=${portfolio.portfolioId}">${portfolio.portfolioName }</a></li>
 				</c:forEach>
 			</ul>
+			</div>
 		</form>
 	</div>
 

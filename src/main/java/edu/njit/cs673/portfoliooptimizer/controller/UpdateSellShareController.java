@@ -25,32 +25,31 @@ import yahoofinance.YahooFinance;
 @Transactional
 @Controller
 public class UpdateSellShareController {
-	
+
 	Logger log = Logger.getLogger(UpdateSellShareController.class);
-	
+
 	@Autowired
 	StockService stockService;
-	
+
 	@Autowired
 	PortfolioService portfolioService;
-	
+
 	@Autowired
 	PortfolioStockService portfoliostockService;
-	
-	
-	
+
 	@RequestMapping(value = "/updateSellShare.htm", method = RequestMethod.POST)
 	public ModelAndView addShare(@RequestParam(name = "hdportfolioId") int hdportfolioId,
-			@RequestParam(name = "stocklist") String stockSymbol, @RequestParam(name = "shareQuantity") int shareQuantity, HttpSession session) throws IOException {
+			@RequestParam(name = "stocklist") String stockSymbol,
+			@RequestParam(name = "shareQuantity") int shareQuantity, HttpSession session) throws IOException {
 
-		
-		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol,hdportfolioId);
-		
-			Stock stock = YahooFinance.get(stockSymbol);			 
-			BigDecimal price = stock.getQuote().getPrice();
-			portfoliostockService.sellStockPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
-			//StocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
-					
+		PortfolioStock portfoliostock = portfoliostockService.getPortfoliostockByStockSymbol(stockSymbol,
+				hdportfolioId);
+
+		Stock stock = YahooFinance.get(stockSymbol);
+		BigDecimal price = stock.getQuote().getPrice();
+		portfoliostockService.sellStockPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
+		// StocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
+
 		Portfolio portfolio = portfolioService.getPortfolioById(hdportfolioId);
 		session.setAttribute("portfolio", portfolio);
 
@@ -70,8 +69,7 @@ public class UpdateSellShareController {
 			}
 
 		}
-		if(stocks.isEmpty())
-		{
+		if (stocks.isEmpty()) {
 			errorMessages.add("stocks or portfolio id is missing");
 		}
 
@@ -80,6 +78,5 @@ public class UpdateSellShareController {
 
 		return model;
 	}
-
 
 }

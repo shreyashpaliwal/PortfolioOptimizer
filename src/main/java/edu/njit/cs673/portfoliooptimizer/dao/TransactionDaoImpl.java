@@ -20,7 +20,7 @@ public class TransactionDaoImpl implements TransactionDao{
 	
 	@Override
 	public void addTransaction(Portfolio portfolio, TransactionType transactionType, Date transactionDate,
-			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice) {
+			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice, String stockSymbol) {
 		// TODO Auto-generated method stub
 	Transaction transaction = new Transaction();
 	transaction.setPortfolio(portfolio);
@@ -29,7 +29,8 @@ public class TransactionDaoImpl implements TransactionDao{
 	transaction.setShareQuantity(shareQuantity);
 	transaction.setTransactionAmount(transactionAmount);
 	transaction.setUnitSharePrice(unitSharePrice);
-	
+	transaction.setStockSymbol(stockSymbol);
+
 	template.save(transaction);
 		
 	}

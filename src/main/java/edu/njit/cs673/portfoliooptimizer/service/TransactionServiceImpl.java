@@ -20,10 +20,10 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public void addTransaction(Portfolio portfolio, TransactionType transactionType, Date transactionDate,
-			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice) {
-		// TODO Auto-generated method stub
+			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice, String stockSymbol) {
+
 		transactionService.addTransaction(portfolio, transactionType, transactionDate, transactionAmount, shareQuantity,
-				unitSharePrice);
+				unitSharePrice, stockSymbol);
 	}
 
 }

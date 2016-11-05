@@ -68,12 +68,14 @@ public class StockServiceImpl implements StockService {
 		
 		
 
-		Map<String, Stock> stockMap = null;
+		Map<String, Stock> stockMap = new HashMap<String,Stock>();
 
 		List<StockPerformance> stockPerformanceList = new ArrayList<StockPerformance>();
 
-		stockMap = YahooFinance.get(stockBuyPriceMap1.keySet().toArray(new String[stockBuyPriceMap1.keySet().size()]));
-
+		if(stockBuyPriceMap1.keySet().size() > 0) 
+		{
+			stockMap = YahooFinance.get(stockBuyPriceMap1.keySet().toArray(new String[stockBuyPriceMap1.keySet().size()]));
+		}
 		stockMap.putAll(getHistoricalDataForNSEStock(stockBuyPriceMap2.keySet()));
 		
 		

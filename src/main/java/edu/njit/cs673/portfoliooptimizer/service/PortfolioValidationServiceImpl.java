@@ -66,6 +66,12 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 			e.printStackTrace();
 		}
 		
+		if(stocks.isEmpty())
+		{
+			
+			validationErrors.add("No data for portfolio selected");
+		}
+		
 		for (PortfolioStock stock : stocks) {
 
 			if (stock.getStockExchangeType().getStockExchangeId() == DOW_30_STOCK_EXCHANGE_ID) {
@@ -123,11 +129,14 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 			log.debug("Portfolio unbalanced due to Cash more than $10,000 ");
 			validationErrors.add("Portfolio unbalanced due to Cash more than $10,000 ");			
 		} 
-		if (Math.ceil(dow30SharePercentage) > 70 || Math.floor(nifty50SharePercentage) < 30) {
-			log.debug("Portfolio unbalanced due to 70-30 rule failed ");
-			validationErrors.add("Portfolio unbalanced due to 70-30 rule failed ");
+		if (Math.ceil(dow30SharePercentage) > 70.0d) {
+			log.debug("DOW30 percentage = "+dow30SharePercentage);			
+			validationErrors.add("DOW30 percentage = "+dow30SharePercentage);
 		} 
-		if (totalShareCount < 7 || totalShareCount > 9)
+		if(Math.floor(nifty50SharePercentage) < 30.0d){
+			validationErrors.add("NIFTY50 percentage = "+nifty50SharePercentage);
+		}
+		if (totalShareCount < 7 && totalShareCount > 9)
 		{
 			log.debug("Portfolio unbalanced due to min-max stocks");
 			validationErrors.add("Portfolio unbalanced due to min-max stocks");			

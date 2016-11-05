@@ -7,6 +7,7 @@ import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.TransactionType;
 
 public interface TransactionDao {
-	
-	public void addTransaction(Portfolio portfolio,TransactionType transactionType,Date transactionDate,BigDecimal transactionAmount,int shareQuantity,BigDecimal unitSharePrice);
+
+	public void addTransaction(Portfolio portfolio, TransactionType transactionType, Date transactionDate,
+			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice, String stockSymbol);
 }

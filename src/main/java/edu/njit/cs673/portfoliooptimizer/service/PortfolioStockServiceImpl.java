@@ -49,7 +49,7 @@ public class PortfolioStockServiceImpl implements PortfolioStockService {
 		BigDecimal buyAmount = new BigDecimal(shareQuantity).multiply(purchasePrice);
 		if (buyAmount.compareTo(p.getCashBalance()) == -1) {
 			portfoliostockservice.addStocktoPortfolio(stockSymbol, shareQuantity, purchasePrice, portfolioID);
-			transactionService.addTransaction(p, ttype, new Date(), buyAmount, shareQuantity, purchasePrice);
+			transactionService.addTransaction(p, ttype, new Date(), buyAmount, shareQuantity, purchasePrice, stockSymbol);
 			portfolioDao.addCash(portfolioID, purchasePrice.multiply(new BigDecimal(shareQuantity)).negate(), true);
 			return true;
 		} else {
@@ -68,7 +68,7 @@ public class PortfolioStockServiceImpl implements PortfolioStockService {
 		if (buyAmount.compareTo(p.getCashBalance()) == -1) {
 			
 			portfoliostockservice.updateStocktoPortfolio(stockSymbol, shareQuantity, purchasePrice, portfolioID);
-			transactionService.addTransaction(p, ttype, new Date(), buyAmount, shareQuantity, purchasePrice);
+			transactionService.addTransaction(p, ttype, new Date(), buyAmount, shareQuantity, purchasePrice, stockSymbol);
 			portfolioDao.addCash(portfolioID, purchasePrice.multiply(new BigDecimal(shareQuantity)).negate(), true);
 			return true;
 		} else {

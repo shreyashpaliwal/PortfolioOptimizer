@@ -66,12 +66,7 @@ public class ViewPortfolioController {
 				log.error("Performance matrices could not be fetched.");
 			}
 			
-		}
-		if(stocks.isEmpty())
-		{
-			
-			errorMessages.add("No data for portfolio selected");
-		}
+		}		
 
 		model.addObject("performanceMatrix", performanceMatrix);
 		model.addObject("errorMessages", errorMessages);

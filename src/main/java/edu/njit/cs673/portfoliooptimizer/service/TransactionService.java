@@ -9,5 +9,5 @@ import edu.njit.c673.portfoliooptimizer.model.TransactionType;
 public interface TransactionService {
 
 	public void addTransaction(Portfolio portfolio, TransactionType transactionType, Date transactionDate,
-			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice);
+			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice, String stockSymbol);
 }

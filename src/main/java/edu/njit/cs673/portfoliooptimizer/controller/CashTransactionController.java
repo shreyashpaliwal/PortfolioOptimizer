@@ -19,6 +19,7 @@ import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 import edu.njit.c673.portfoliooptimizer.model.StockPerformance;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioService;
+import edu.njit.cs673.portfoliooptimizer.service.PortfolioValidationService;
 import edu.njit.cs673.portfoliooptimizer.service.StockService;
 
 @Controller
@@ -31,6 +32,9 @@ public class CashTransactionController {
 	
 	@Autowired
 	StockService stockService;
+	
+	@Autowired
+	PortfolioValidationService portfolioValidationService;
 	
 	@RequestMapping(name="/addCash.htm", method=RequestMethod.GET)
 	public ModelAndView addCash(@RequestParam(name = "portfolioId") int portfolioId,
@@ -46,11 +50,11 @@ public class CashTransactionController {
 		ModelAndView model = new ModelAndView("viewPortfolio");
 		List<String> errorMessages = new ArrayList<String>();
 		
-		if(portfolioId == 0 || cashAmount==0)
+/*		if(portfolioId == 0 || cashAmount==0)
 		{
 			errorMessages.add("portfolio ID or cash is null");
 		}
-		
+		*/
 		portfolioService.addCash(portfolioId, new BigDecimal(cashAmount), withdraw);
 		
 		log.debug("Getting portfolio Stocks for portfolio ID - " + portfolioId);
@@ -68,13 +72,16 @@ public class CashTransactionController {
 				log.error("Performance matrices could not be fetched.");
 			}		
 		}
-		model.addObject("performanceMatrix", performanceMatrix);
-		model.addObject("errorMessages", errorMessages);
-		
-		
+
 		Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
 		session.setAttribute("portfolio", portfolio);
 		
+		errorMessages.addAll(portfolioValidationService.validatePortfolio(portfolio));
+		
+		
+		model.addObject("performanceMatrix", performanceMatrix);
+		model.addObject("errorMessages", errorMessages);
+						
 		return model;
 	}
 	

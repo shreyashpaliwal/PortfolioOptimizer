@@ -76,8 +76,10 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto"></prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				
 			</props>
 		</property>
 	</bean>

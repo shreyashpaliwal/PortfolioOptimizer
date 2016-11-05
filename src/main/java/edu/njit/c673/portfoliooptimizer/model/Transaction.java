@@ -52,6 +52,9 @@ public class Transaction implements Serializable {
 	@Column(name = "UNIT_SHARE_PRICE", precision = 10)
 	private BigDecimal unitSharePrice;
 
+	@Column(name = "STOCK_SYMBOL")
+	private String stockSymbol;
+	
 	public int getTransactionId() {
 		return transactionId;
 	}
@@ -106,6 +109,14 @@ public class Transaction implements Serializable {
 
 	public void setUnitSharePrice(BigDecimal unitSharePrice) {
 		this.unitSharePrice = unitSharePrice;
+	}
+
+	public String getStockSymbol() {
+		return stockSymbol;
+	}
+
+	public void setStockSymbol(String stockSymbol) {
+		this.stockSymbol = stockSymbol;
 	}
 
 }
