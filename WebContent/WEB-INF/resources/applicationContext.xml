@@ -47,9 +47,10 @@
 			value="jdbc:oracle:thin:@prophet.njit.edu:1521:course" />
 		<property name="username" value="tmp33" />
 		<property name="password" value="sophism26" />
-		<!-- <property name="username" value="snp59" />
-		<property name="password" value="1sepQCyx2" /> -->
-		<property name="initialSize" value="5" />
+<!-- 		<property name="username" value="snp59" />
+		<property name="password" value="1sepQCyx2" />
+ -->		
+ 		<property name="initialSize" value="5" />
 		<property name="maxActive" value="10" />
 	</bean>
 
@@ -76,7 +77,7 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto"></prop>
 				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
 				<prop key="hibernate.connection.release_mode">after_transaction</prop>
 				

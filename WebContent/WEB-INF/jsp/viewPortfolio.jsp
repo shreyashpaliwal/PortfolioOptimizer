@@ -101,9 +101,7 @@ body {
 
 				<h2>portfolio ID: ${portfolio.portfolioId }</h2>
 
-				<caption>
-					,
-
+				<caption>					
 					<h3>
 						<u>Portfolio Performance!!</u>
 					</h3>

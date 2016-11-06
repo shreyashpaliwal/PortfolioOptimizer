@@ -49,7 +49,7 @@ public class Transaction implements Serializable {
 	@Column(name = "SHARE_QUANTITY", precision = 10)
 	private float shareQuantity;
 
-	@Column(name = "UNIT_SHARE_PRICE", precision = 10)
+	@Column(name = "UNIT_SHARE_PRICE", precision = 10,scale = 2)
 	private BigDecimal unitSharePrice;
 
 	@Column(name = "STOCK_SYMBOL")

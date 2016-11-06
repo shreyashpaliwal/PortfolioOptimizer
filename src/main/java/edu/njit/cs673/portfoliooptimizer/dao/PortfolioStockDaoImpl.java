@@ -19,6 +19,7 @@ import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 import edu.njit.c673.portfoliooptimizer.model.StockExchangeType;
 import edu.njit.c673.portfoliooptimizer.model.StockInventory;
+import edu.njit.c673.portfoliooptimizer.model.Transaction;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioService;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioStockService;
 import edu.njit.cs673.portfoliooptimizer.service.StockService;
@@ -102,11 +103,11 @@ public class PortfolioStockDaoImpl implements PortfolioStockDao {
 		template.save(stock);
 	}
 	
-	public void sellStockPortfolio(String stockSymbol,int shareQuantity,BigDecimal sellPrice,int portfolioID)
+	public void sellStockPortfolio(String stockSymbol,int shareQuantity,int portfolioID)
 	{
-		List<PortfolioStock> stocks = portfolio.getStocksByPortfolio(portfolioID);
+		//List<PortfolioStock> stocks = portfolio.getStocksByPortfolio(portfolioID);
 		
-		PortfolioStock stock = getPortfoliostockByStockSymbol(stockSymbol,portfolioID);
+		/*PortfolioStock stock = getPortfoliostockByStockSymbol(stockSymbol,portfolioID);
 		int updatedStockQuantity =0;
 		for(int i = 0;i<stocks.size();i++)
 		{
@@ -114,7 +115,7 @@ public class PortfolioStockDaoImpl implements PortfolioStockDao {
 				updatedStockQuantity = Integer.parseInt(stock.getShareQuantity().toString()) - shareQuantity;
 			else
 				updatedStockQuantity = shareQuantity;
-		}
+		}*/
 		
 		
 		String sql1 = "update PORTFOLIO_STOCK set SHARE_QUANTITY = :shareQuantity where ("
@@ -130,5 +131,19 @@ public class PortfolioStockDaoImpl implements PortfolioStockDao {
 		sql.setParameter("stockSymbol", stockSymbol);
 		sql.setParameter("Portfolio", portfolioID);
 		sql.executeUpdate();
+	}
+	
+	public void deleteStocks(String stockSymbol, Portfolio portfolio){
+		DetachedCriteria criteria = DetachedCriteria.forClass(PortfolioStock.class);
+		
+		criteria.add(Restrictions.eq("portfolio", portfolio));
+		criteria.add(Restrictions.eq("stockSymbol", stockSymbol));
+				
+		PortfolioStock t = (PortfolioStock)(template.findByCriteria(criteria).get(0));
+		
+		if(t!= null){
+			template.delete(t);
+		}
+		
 	}
 }
