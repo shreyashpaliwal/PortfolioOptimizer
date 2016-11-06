@@ -2,6 +2,7 @@ package edu.njit.cs673.portfoliooptimizer.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,15 +81,16 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 				{
 					if(stock.getStockSymbol().equalsIgnoreCase(stockperf.getStockSymbol()))
 					{
-						dow30cash = dow30cash.add(stockperf.getCostBasis());
+						dow30cash =  dow30cash.add(stockperf.getCostBasis());
 					}
 				}
 			} else if (stock.getStockExchangeType().getStockExchangeId() == NIFTY_50_STOCK_EXCHANGE_ID) {
 				nifty50StockCount++;
 				for(StockPerformance stockperf : stockPerformance)
 				{
-					if(stock.getStockSymbol().equalsIgnoreCase(stockperf.getStockSymbol())){
-						niftycash = stockperf.getCostBasis();
+					if(stock.getStockSymbol().equalsIgnoreCase(stockperf.getStockSymbol()))
+					{
+						niftycash = niftycash.add(stockperf.getCostBasis());
 					}
 				}
 			}
@@ -105,7 +107,7 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 		log.debug("NIFTY 50 Stock count = " + nifty50StockCount);	
 		
 		BigDecimal totalcash = dow30cash.add(niftycash);
-
+		
 		double totalShareCount = dow30StockCount + nifty50StockCount;
 
 		log.debug("Total Stock count = " + totalShareCount);
@@ -113,14 +115,29 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 		//double dow30SharePercentage = (dow30StockCount / totalShareCount) * 100;
 		//double nifty50SharePercentage = (nifty50StockCount / totalShareCount) * 100;
 		
+		validationErrors.add("Nifty Cash - " + niftycash);
+		validationErrors.add("Dow 30 Cash- " + dow30cash);
+		log.debug("Nifty Cash - " + niftycash);
+		log.debug("Dow 30 Cash- " + dow30cash);
+		
 		if((!(totalcash == null)) && !totalcash.equals(new BigDecimal(0)))
 		{
 			dow30SharePercentage = (dow30cash.doubleValue()/totalcash.doubleValue()) * 100;
 		 	nifty50SharePercentage = (niftycash.doubleValue() / totalcash.doubleValue()) * 100;
-		}
+		 	
+		 	DecimalFormat df = new DecimalFormat("#.##");
+		 	String s_dow30SharePercentage = df.format(dow30SharePercentage);
+		 	String s_nifty50SharePercentage = df.format(nifty50SharePercentage);
 		
+		
+		validationErrors.add("Non Cash value: " + totalcash);
+		validationErrors.add("Nifty Cash %- " + s_nifty50SharePercentage );
+		validationErrors.add("Dow 30 Cash %- " + s_dow30SharePercentage );
+		
+		log.debug("Non Cash value: " + totalcash);
 		log.debug("Dow 30 share percentage = " + dow30SharePercentage);
 		log.debug("Nifty 50 share percentage = " + nifty50SharePercentage);
+		}
 		
 		int availBalance = Integer.parseInt(portfolio.getCashBalance().toString());
 
@@ -129,13 +146,18 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 			log.debug("Portfolio unbalanced due to Cash more than $10,000 ");
 			validationErrors.add("Portfolio unbalanced due to Cash more than $10,000 ");			
 		} 
-		if (Math.ceil(dow30SharePercentage) > 70.0d) {
+		if (Math.ceil(dow30SharePercentage) >= 69.0d && Math.ceil(dow30SharePercentage) <= 71.0d)
+				 {
 			log.debug("DOW30 percentage = "+dow30SharePercentage);			
-			validationErrors.add("DOW30 percentage = "+dow30SharePercentage);
+			//validationErrors.add("Portfolio is valid By Share balance Rule(Non-Cash value--70% Dow 30 and 30% Nifty 50");
 		} 
-		if(Math.floor(nifty50SharePercentage) < 30.0d){
-			validationErrors.add("NIFTY50 percentage = "+nifty50SharePercentage);
+		else
+		{
+			validationErrors.add("Portfolio is Invalid By Share balance Rule(Non-Cash value--70% Dow 30 and 30% Nifty 50)");
 		}
+		/*if(Math.floor(nifty50SharePercentage) < 31.0d && Math.floor(nifty50SharePercentage) < 29.0d){
+			//validationErrors.add("Nifty Cash %- " + s_nifty50SharePercentage );
+		}*/
 		if (totalShareCount < 7 && totalShareCount > 9)
 		{
 			log.debug("Portfolio unbalanced due to min-max stocks");

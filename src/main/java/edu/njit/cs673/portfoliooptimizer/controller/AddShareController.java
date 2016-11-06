@@ -107,15 +107,25 @@ public class AddShareController {
 			try{
 			Stock stock = YahooFinance.get(stockSymbol);
 			price = stock.getQuote().getPrice();
+			if(price ==null)
+			{
+				Set<String> stocks = new HashSet<String>();
+				stocks.add(stockSymbol);
+				Map<String,Stock>  stockMap = stockService.getHistoricalDataForNSEStock(stocks);
+				stock = stockMap.get(stockSymbol);
+				
+				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
+				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
+			}
 			}
 			catch (Exception e) {
-				Set<String> stocks = new HashSet<String>();
+				/*Set<String> stocks = new HashSet<String>();
 				stocks.add(stockSymbol);
 				Map<String,Stock>  stockMap = stockService.getHistoricalDataForNSEStock(stocks);
 				Stock stock = stockMap.get(stockSymbol);
 				
 				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
-				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
+				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());*/
 			}			
 			
 			b = portfoliostockService.updateStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);

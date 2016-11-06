@@ -9,6 +9,8 @@ import java.math.RoundingMode;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,7 @@ public class StockServiceImpl implements StockService {
 		Map<String, BigDecimal> stockBuyPriceMap1 = new HashMap<String, BigDecimal>();
 		Map<String, BigDecimal> stockBuyPriceMap2 = new HashMap<String, BigDecimal>();
 		Map<String, BigDecimal> stockshareQuantityMap = new HashMap<String,BigDecimal>();
-
+		int PortfolioID=0;
 		for (PortfolioStock stock : portfolioStocks) {
 			if(stock.getStockExchangeType().getStockExchangeId() == 1){
 			stockBuyPriceMap1.put(stock.getStockSymbol(), stock.getPurchasePrice());
@@ -64,6 +66,7 @@ public class StockServiceImpl implements StockService {
 			stockBuyPriceMap2.put(stock.getStockSymbol(), stock.getPurchasePrice());
 			}
 			stockshareQuantityMap.put(stock.getStockSymbol(), stock.getShareQuantity());
+			PortfolioID =stock.getPortfolio().getPortfolioId();
 		}
 		
 		
@@ -94,7 +97,7 @@ public class StockServiceImpl implements StockService {
 
 			if (entry.getValue().getQuote() != null) {
 				stockPerformance.setStockSymbol(entry.getKey());				
-				stockPerformance.setLastPrice(entry.getValue().getQuote().getPrice());
+				stockPerformance.setLastPrice(entry.getValue().getQuote().getPreviousClose());
 				// stockPerformance.setCostBasis(new BigDecimal(0));
 				// stockPerformance.setMarketValue(new BigDecimal(0));
 
@@ -105,15 +108,24 @@ public class StockServiceImpl implements StockService {
 				BigDecimal gain = null;
 				BigDecimal gainper = null;
 				BigDecimal costBasis = null;
+				BigDecimal mktvalue = null;
+						
 				if (currPrice != null) {
-					gain = currPrice.subtract(buyPrice);
-					costBasis = currPrice.multiply(stockQuantity);
+					//gain = currPrice.subtract(buyPrice);
+					//costBasis = buyPrice.multiply(stockQuantity);
+					
+					costBasis = getCostBases(entry.getKey(),PortfolioID);
 					log.debug("The costBasis calculated as: "+costBasis );
 					stockPerformance.setCostBasis(costBasis);
-					stockPerformance.setMarketValue(costBasis);
+					mktvalue = currPrice.multiply(stockQuantity);
+					stockPerformance.setMarketValue(mktvalue);
+					
+					gain = mktvalue.add(costBasis.negate());
+					gainper = gain.multiply(new BigDecimal(100));
+					gainper = gainper.divide(costBasis,2, RoundingMode.HALF_UP);
 					stockPerformance.setGain(gain);
 					stockPerformance.setChange(entry.getValue().getQuote().getChange());
-					gainper = (gain.divide(buyPrice,RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
+					//gainper = (gain.divide(buyPrice,RoundingMode.HALF_UP).multiply(new BigDecimal(100)));
 					stockPerformance.setGainPercentage(gainper);
 					stockPerformance.setOverallReturn(gainper);
 					stockPerformance.setShares(stockQuantity);
@@ -129,6 +141,12 @@ public class StockServiceImpl implements StockService {
 		return stockPerformanceList;
 	}
 
+	public BigDecimal getCostBases(String StockSymbol,int PortfolioID)
+	{
+		BigDecimal CostBasis = stockinventory.getCostBases(StockSymbol, PortfolioID);
+		return CostBasis;
+	}
+	
 	public void addCash(int portfolioId, BigDecimal cash){
 		
 	}
@@ -158,8 +176,21 @@ public class StockServiceImpl implements StockService {
 		URL url = null;
 
 		try {
+			 Date date = new Date(); // your date
+			    Calendar cal = Calendar.getInstance();
+			    cal.setTime(date);
+			    int f = cal.get(Calendar.YEAR);
+			    int d = cal.get(Calendar.MONTH);
+			    int e = cal.get(Calendar.DAY_OF_MONTH);
+			    d+=1;
+			    Calendar calendar = Calendar.getInstance(); // this would default to now
+			    calendar.add(Calendar.DAY_OF_MONTH, -90);
+			    int c = calendar.get(Calendar.YEAR);
+			    int a = calendar.get(Calendar.MONTH);
+			    int b = calendar.get(Calendar.DAY_OF_MONTH);
+			    a+=1;
 			url = new URL("http://chart.finance.yahoo.com/table.csv?s=" + stockQuote.trim()
-					+ ".NS&a=8&b=7&c=2016&d=9&e=7&f=2016&g=d&ignore=.csv");
+					+ ".NS&a="+a+"&b="+b+"&c="+c+"&d="+d+"&e="+e+"&f="+f+"&g=d&ignore=.csv");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

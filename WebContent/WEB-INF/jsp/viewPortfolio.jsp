@@ -137,9 +137,13 @@ body {
 
 					</tr>
 					<c:forEach items="${performanceMatrix}" var="perf">
-
-						<tr>
-
+							<c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+								<tr style="background-color:#651fff;">								
+								</c:if> <c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+								<tr style="background-color:#b388ff;">								
+								</c:if>
 							<%-- <th>${stock.stockSymbol }</th> --%>
 
 							<td>${perf.stock.stockSymbol}</td>
@@ -157,9 +161,9 @@ body {
 								${perf.lastPrice} $								
 								</c:if> <c:if
 									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
-								${perf.lastPrice} $ / <fmt:formatNumber maxFractionDigits="2"
+								$<fmt:formatNumber maxFractionDigits="2"
 										groupingUsed="true"
-										value="${perf.lastPrice * sessionScope.fxRate }" />  &#8377;
+										value="${perf.lastPrice / sessionScope.fxRate }" />/ ${perf.lastPrice}    &#8377;
 																
 							</c:if></td>
 							<td>${perf.change}</td>
@@ -168,15 +172,55 @@ body {
 
 							<td>${perf.costBasis}</td>
 
-							<td>${perf.marketValue}</td>
+							<td><c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+									${perf.marketValue}
+									</c:if>
+									<c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+									<fmt:formatNumber maxFractionDigits="2"
+										groupingUsed="true"
+										value="${perf.stock.shareQuantity *( perf.lastPrice / sessionScope.fxRate) }" />
+									</c:if>
+									</td>
 
-							<td>${perf.gain}</td>
+							<td><c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+									${perf.gain}
+									</c:if>
+									<c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+									<fmt:formatNumber maxFractionDigits="2"
+										groupingUsed="true"
+										value="${(perf.stock.shareQuantity *( perf.lastPrice / sessionScope.fxRate) ) - (perf.costBasis)}" />
+									</c:if>
+							</td>
 
-							<td>${perf.gainPercentage}</td>
+							<td>
+							<c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+									${perf.gainPercentage}
+									</c:if>
+									<c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+									<fmt:formatNumber maxFractionDigits="2"
+										groupingUsed="true"
+										value="${(((perf.stock.shareQuantity *( perf.lastPrice / sessionScope.fxRate) ) - (perf.costBasis)) * 100)/(perf.costBasis)}" />
+									</c:if>%
+							</td>
 
 							<!-- <td>${perf.daysGain}</td> -->
 
-							<td>${perf.overallReturn}</td>
+							<td><c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 1}">
+									${perf.gainPercentage}
+									</c:if>
+									<c:if
+									test="${perf.stock.stockExchangeType.stockExchangeId == 2}">
+									<fmt:formatNumber maxFractionDigits="2"
+										groupingUsed="true"
+										value="${(((perf.stock.shareQuantity *( perf.lastPrice / sessionScope.fxRate) ) - (perf.costBasis)) * 100)/(perf.costBasis)}" />
+									</c:if>%</td>
 
 						</tr>
 					</c:forEach>
