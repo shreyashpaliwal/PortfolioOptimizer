@@ -1,10 +1,7 @@
 package edu.njit.cs673.portfoliooptimizer.service;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.Date;
-
-import javax.persistence.Convert;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,10 +76,14 @@ public class PortfolioStockServiceImpl implements PortfolioStockService {
 	
 
 	@Override
-	public void sellStockPortfolio(String stockSymbol, int shareQuantity, BigDecimal sellPrice, int portfolioID) {
-		portfoliostockservice.sellStockPortfolio(stockSymbol, shareQuantity, sellPrice, portfolioID);
-		// StocktoPortfolio(stockSymbol,shareQuantity,sellPrice,portfolioID);
-
-		portfolioDao.addCash(portfolioID, sellPrice.multiply(new BigDecimal(shareQuantity)), true);
+	public void sellStockPortfolio(String stockSymbol, int shareQuantity, int portfolioID) {
+		portfoliostockservice.sellStockPortfolio(stockSymbol, shareQuantity, portfolioID);				
 	}
+	
+	@Override
+	public void delete(String stockSymbol, Portfolio portfolio){
+		portfoliostockservice.deleteStocks(stockSymbol, portfolio);			
+	}
+
+
 }

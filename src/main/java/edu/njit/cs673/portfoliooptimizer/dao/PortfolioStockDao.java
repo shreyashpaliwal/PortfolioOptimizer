@@ -2,6 +2,7 @@ package edu.njit.cs673.portfoliooptimizer.dao;
 
 import java.math.BigDecimal;
 
+import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
 
 
@@ -11,7 +12,9 @@ public interface PortfolioStockDao {
 	
 	public void addStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 	
-	public void sellStockPortfolio(String stockSymbol,int shareQuantity,BigDecimal sellPrice,int portfolioID);
+	public void sellStockPortfolio(String stockSymbol,int shareQuantity,int portfolioID);
 	
 	public void updateStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
+	
+	public void deleteStocks(String stockSymbol, Portfolio portfolio);
 }
