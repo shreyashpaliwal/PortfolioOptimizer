@@ -84,12 +84,14 @@ public class UpdateSellShareController {
 				}
 						
 				log.info("Trying to sell stock - " + stockSymbol+ "portfolio id - "+ hdportfolioId+ "stock quantity to sell -"+ shareQuantity);			
-				if((int)vo.getNumberOfShares() > ((int)shareQuantity)){
-				portfoliostockService.sellStockPortfolio(vo.getStockSymbol(), ((int)vo.getNumberOfShares()) - ((int)shareQuantity),
-						hdportfolioId);
+				
+				portfoliostockService.sellStockPortfolio(vo.getStockSymbol(),  ((int)shareQuantity),
+						portfolioService.getPortfolioById(hdportfolioId));
+				/*if((int)vo.getNumberOfShares() > ((int)shareQuantity)){
+				
 				}else if((int)vo.getNumberOfShares() == ((int)shareQuantity)){
 				portfoliostockService.delete(vo.getStockSymbol(), (Portfolio)session.getAttribute("portfolio"));	
-				}
+				}*/
 				
 				BigDecimal cashBack = currentPrice.multiply(new BigDecimal(shareQuantity));
 				log.info("Will be getting cash back of $"+ cashBack.floatValue());
@@ -102,9 +104,6 @@ public class UpdateSellShareController {
 			}			
 			}
 		});
-
-		Portfolio portfolio = portfolioService.getPortfolioById(hdportfolioId);
-		session.setAttribute("portfolio", portfolio);
 
 		ModelAndView model = new ModelAndView("viewPortfolio");
 
@@ -127,6 +126,9 @@ public class UpdateSellShareController {
 
 		model.addObject("performanceMatrix", performanceMatrix);
 		model.addObject("errorMessages", errorMessages);
+
+		Portfolio portfolio = portfolioService.getPortfolioById(hdportfolioId);
+		session.setAttribute("portfolio", portfolio);
 
 		return model;
 	}

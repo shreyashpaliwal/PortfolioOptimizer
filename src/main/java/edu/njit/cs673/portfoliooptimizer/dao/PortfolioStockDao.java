@@ -12,7 +12,7 @@ public interface PortfolioStockDao {
 	
 	public void addStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 	
-	public void sellStockPortfolio(String stockSymbol,int shareQuantity,int portfolioID);
+	public void sellStockPortfolio(String stockSymbol,int shareQuantity,Portfolio portfolio);
 	
 	public void updateStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 	

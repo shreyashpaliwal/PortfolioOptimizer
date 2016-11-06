@@ -103,34 +103,31 @@ public class PortfolioStockDaoImpl implements PortfolioStockDao {
 		template.save(stock);
 	}
 	
-	public void sellStockPortfolio(String stockSymbol,int shareQuantity,int portfolioID)
+	public void sellStockPortfolio(String stockSymbol,int shareQuantity,Portfolio portfolio)
 	{
-		//List<PortfolioStock> stocks = portfolio.getStocksByPortfolio(portfolioID);
 		
-		/*PortfolioStock stock = getPortfoliostockByStockSymbol(stockSymbol,portfolioID);
-		int updatedStockQuantity =0;
-		for(int i = 0;i<stocks.size();i++)
-		{
-			if(stocks.get(i).getStockSymbol() == stockSymbol) 
-				updatedStockQuantity = Integer.parseInt(stock.getShareQuantity().toString()) - shareQuantity;
-			else
-				updatedStockQuantity = shareQuantity;
-		}*/
+		DetachedCriteria criteria = DetachedCriteria.forClass(PortfolioStock.class);
+		criteria.add(Restrictions.eq("portfolio",portfolio));
+		criteria.add(Restrictions.eq("stockSymbol",stockSymbol));
 		
+		PortfolioStock t = (PortfolioStock)(template.findByCriteria(criteria).get(0));
 		
-		String sql1 = "update PORTFOLIO_STOCK set SHARE_QUANTITY = :shareQuantity where ("
-				+ "STOCK_SYMBOL = :stockSymbol and  "
-				+ "PORTFOLIO_ID = :Portfolio"				
-				+ ")";
-		// String sql1 = "insert into PortfolioStock
-		// (portfolioStockId,stockSymbol,shareQuantity,purchasePrice,Portfolio)
-		// values(portfoliostock_seq.nextval,
-		// :stockSymbol,:shareQuantity,:purchasePrice,:Portfolio)";
-		Query sql = sessionFactory.getCurrentSession().createSQLQuery(sql1);
-		sql.setParameter("shareQuantity", shareQuantity);
-		sql.setParameter("stockSymbol", stockSymbol);
-		sql.setParameter("Portfolio", portfolioID);
-		sql.executeUpdate();
+		if (t != null) {
+			if (t.getShareQuantity().intValue() == shareQuantity) {
+
+				template.delete(t);
+
+			} else if (t.getShareQuantity().intValue() > shareQuantity) {
+				String sql1 = "update PORTFOLIO_STOCK set SHARE_QUANTITY = :shareQuantity where ("
+						+ "STOCK_SYMBOL = :stockSymbol and  " + "PORTFOLIO_ID = :Portfolio" + ")";
+
+				Query sql = sessionFactory.getCurrentSession().createSQLQuery(sql1);
+				sql.setParameter("shareQuantity",t.getShareQuantity().intValue() - shareQuantity);
+				sql.setParameter("stockSymbol", stockSymbol);
+				sql.setParameter("Portfolio", portfolio);
+				sql.executeUpdate();
+			}
+		}
 	}
 	
 	public void deleteStocks(String stockSymbol, Portfolio portfolio){

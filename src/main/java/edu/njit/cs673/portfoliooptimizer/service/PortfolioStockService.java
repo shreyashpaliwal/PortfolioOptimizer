@@ -12,7 +12,7 @@ public interface PortfolioStockService {
 	
 	public boolean addStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 	
-	public void sellStockPortfolio(String stockSymbol,int shareQuantity,int portfolioID);
+	public void sellStockPortfolio(String stockSymbol,int shareQuantity,Portfolio portfolio);
 	
 	public boolean updateStocktoPortfolio(String stockSymbol,int shareQuantity,BigDecimal purchasePrice,int portfolioID);
 	

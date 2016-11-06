@@ -29,17 +29,32 @@ public class TransactionDaoImpl implements TransactionDao{
 	@Override
 	public void addTransaction(Portfolio portfolio, TransactionType transactionType, Date transactionDate,
 			BigDecimal transactionAmount, int shareQuantity, BigDecimal unitSharePrice, String stockSymbol) {
-		// TODO Auto-generated method stub
-	Transaction transaction = new Transaction();
-	transaction.setPortfolio(portfolio);
-	transaction.setTransactionType(transactionType);
-	transaction.setTransactionDate(transactionDate);
-	transaction.setShareQuantity(shareQuantity);
-	transaction.setTransactionAmount(transactionAmount);
-	transaction.setUnitSharePrice(unitSharePrice);
-	transaction.setStockSymbol(stockSymbol);
 
-	template.save(transaction);
+		DetachedCriteria criteria = DetachedCriteria.forClass(Transaction.class);
+		
+		criteria.add(Restrictions.eq("portfolio", portfolio))
+				.add(Restrictions.eq("stockSymbol", stockSymbol))
+				.add(Restrictions.eq("unitSharePrice", unitSharePrice));
+		
+		List<Transaction> txList = (List<Transaction>)template.findByCriteria(criteria);
+		
+		if(txList != null && txList.size() > 0){
+			Transaction existingTx = txList.get(0);
+			existingTx.setShareQuantity(existingTx.getShareQuantity() + shareQuantity);
+			template.save(existingTx);
+		}
+		else{		
+			Transaction transaction = new Transaction();
+			transaction.setPortfolio(portfolio);
+			transaction.setTransactionType(transactionType);
+			transaction.setTransactionDate(transactionDate);
+			transaction.setShareQuantity(shareQuantity);
+			transaction.setTransactionAmount(transactionAmount);
+			transaction.setUnitSharePrice(unitSharePrice);
+			transaction.setStockSymbol(stockSymbol);
+		
+			template.save(transaction);
+		}
 		
 	}
 	

@@ -76,8 +76,8 @@ public class PortfolioStockServiceImpl implements PortfolioStockService {
 	
 
 	@Override
-	public void sellStockPortfolio(String stockSymbol, int shareQuantity, int portfolioID) {
-		portfoliostockservice.sellStockPortfolio(stockSymbol, shareQuantity, portfolioID);				
+	public void sellStockPortfolio(String stockSymbol, int shareQuantity, Portfolio portfolio) {
+		portfoliostockservice.sellStockPortfolio(stockSymbol, shareQuantity, portfolio);				
 	}
 	
 	@Override
