@@ -158,7 +158,7 @@ public class PortfolioValidationServiceImpl implements PortfolioValidationServic
 		/*if(Math.floor(nifty50SharePercentage) < 31.0d && Math.floor(nifty50SharePercentage) < 29.0d){
 			//validationErrors.add("Nifty Cash %- " + s_nifty50SharePercentage );
 		}*/
-		if (totalShareCount < 7 && totalShareCount > 9)
+		if (totalShareCount < 7 || totalShareCount > 9)
 		{
 			log.debug("Portfolio unbalanced due to min-max stocks");
 			validationErrors.add("Portfolio unbalanced due to min-max stocks");			

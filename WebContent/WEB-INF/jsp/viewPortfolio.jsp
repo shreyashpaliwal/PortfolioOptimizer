@@ -229,7 +229,7 @@ body {
 		<br /> <br />
 		<table border="0">
 		<tr>
-		<th>
+		<td>
 		<form action="${pageContext.request.contextPath}/addCash.htm"
 			style="width: 350px; margin-top: 5px; margin-bottom: 5px; margin-left: 10px; margin-right: 10px;display: block;">
 			<div style="padding: 10px;">
@@ -254,8 +254,8 @@ body {
 					name="portfolioId" />
 				<input type="hidden" value="true" name="withdraw"> --%>
 		</form>
-		</th>
-		<th>
+		</td>
+		<td>
 			<div style="padding: 10px; width: 350px; margin-top: 5px; 
 				margin-bottom: 5px; margin-left: 10px; margin-right: 10px; 
 				display: block;">
@@ -271,9 +271,18 @@ body {
 				<input type="submit" value="SellShare"></input> <input type="hidden"
 					value="${portfolio.portfolioId}" name="portfolioId" />
 			</form>
-						
+					
+					<form
+				action="${pageContext.request.contextPath}/ExportPortfolio.htm?portfolioId=${portfolio.portfolioId}&">
+				<input type="submit" value="Export Portfolio"></input> <input type="hidden"
+					value="${portfolio.portfolioId}" name="portfolioId" />
+			</form>	
 			</div>
-				</th>
+			</td>
+				
+					
+					
+				
 		</tr>		
 		</table>		
 		</div>
