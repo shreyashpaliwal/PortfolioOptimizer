@@ -190,7 +190,7 @@ public class StockServiceImpl implements StockService {
 			    int b = calendar.get(Calendar.DAY_OF_MONTH);
 			    a+=1;
 			url = new URL("http://chart.finance.yahoo.com/table.csv?s=" + stockQuote.trim()
-					+ ".NS&a="+a+"&b="+b+"&c="+c+"&d="+d+"&e="+e+"&f="+f+"&g=d&ignore=.csv");
+					+ ".NS&a="+8+"&b="+12+"&c="+2016+"&d="+8+"&e="+12+"&f="+2016+"&g=d&ignore=.csv");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -219,7 +219,7 @@ public class StockServiceImpl implements StockService {
 
 			stock.setCurrency("U+20B9");
 			quote.setOpen(new BigDecimal(record.get(1)));
-			quote.setPrice(new BigDecimal(record.get(1)));
+			quote.setPrice(new BigDecimal(record.get(6)));
 			quote.setDayHigh(new BigDecimal(record.get(2)));
 			quote.setDayLow(new BigDecimal(record.get(3)));
 			quote.setPreviousClose(new BigDecimal(record.get(4)));

@@ -25,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.njit.c673.portfoliooptimizer.model.Portfolio;
 import edu.njit.c673.portfoliooptimizer.model.PortfolioStock;
+import edu.njit.c673.portfoliooptimizer.model.StockInventory;
 import edu.njit.c673.portfoliooptimizer.model.StockPerformance;
+import edu.njit.cs673.portfoliooptimizer.dao.StockInventoryDao;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioService;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioStockService;
 import edu.njit.cs673.portfoliooptimizer.service.PortfolioValidationService;
@@ -52,6 +54,9 @@ public class AddShareController {
 	
 	@Autowired
 	PortfolioValidationService portfolioValidationService;
+	
+	@Autowired
+	StockInventoryDao stockinventory;
 
 	@RequestMapping(value = "/addShare.htm", method = RequestMethod.POST)
 	public ModelAndView addShare(@RequestParam(name = "hdportfolioId") int hdportfolioId,
@@ -89,6 +94,19 @@ public class AddShareController {
 			Stock stock = YahooFinance.get(stockSymbol);			
 			List<HistoricalQuote> googleHistQuotes = stock.getHistory(from, to, Interval.DAILY);
 								
+			List<StockInventory> stocks = stockService.getStockFromInventory();
+			for (StockInventory stockInventory : stocks) {
+				
+				if(stockInventory.getStockSymbol().equals(stockSymbol))
+				{
+				if(stockInventory.getStockExchangeType().getStockExchangeId() == 2 )
+				{
+					//portfolioStock.setStockExchangeType(stockInventory.getStockExchangeType());
+					throw new Exception();
+				}
+				}
+			}
+			
 			price=googleHistQuotes.get(googleHistQuotes.size()-1).getClose();
 			}catch( Exception e){								
 				Set<String> stocks = new HashSet<String>();
@@ -97,6 +115,7 @@ public class AddShareController {
 				Stock stock = stockMap.get(stockSymbol);
 				price = stock.getQuote().getPrice();
 				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
+				log.debug("INR USD VALUE Tejas: " + inrUsdFx.getPrice());
 				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
 			}
 			b = portfoliostockService.addStocktoPortfolio(stockSymbol, shareQuantity, price, hdportfolioId);
@@ -105,17 +124,29 @@ public class AddShareController {
 				
 		} else {
 			try{
+				
 			Stock stock = YahooFinance.get(stockSymbol);
 			price = stock.getQuote().getPrice();
+			List<StockInventory> stocks = stockService.getStockFromInventory();
+			for (StockInventory stockInventory : stocks) {
+				
+				if(stockInventory.getStockSymbol().equals(stockSymbol))
+				{
+				if(stockInventory.getStockExchangeType().getStockExchangeId() == 2 )
+				{
+					Set<String> stocks1 = new HashSet<String>();
+					stocks1.add(stockSymbol);
+					Map<String,Stock>  stockMap = stockService.getHistoricalDataForNSEStock(stocks1);
+					stock = stockMap.get(stockSymbol);
+					
+					FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
+					price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
+				}
+				}
+			}
 			if(price ==null)
 			{
-				Set<String> stocks = new HashSet<String>();
-				stocks.add(stockSymbol);
-				Map<String,Stock>  stockMap = stockService.getHistoricalDataForNSEStock(stocks);
-				stock = stockMap.get(stockSymbol);
 				
-				FxQuote inrUsdFx = YahooFinance.getFx("INRUSD=X");
-				price = stock.getQuote().getPrice().multiply(inrUsdFx.getPrice());
 			}
 			}
 			catch (Exception e) {
