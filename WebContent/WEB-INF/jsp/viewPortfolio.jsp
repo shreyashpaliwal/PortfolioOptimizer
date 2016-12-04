@@ -272,9 +272,15 @@ body {
 					value="${portfolio.portfolioId}" name="portfolioId" />
 			</form>
 					
-					<form
+			<form
 				action="${pageContext.request.contextPath}/ExportPortfolio.htm?portfolioId=${portfolio.portfolioId}&">
 				<input type="submit" value="Export Portfolio"></input> <input type="hidden"
+					value="${portfolio.portfolioId}" name="portfolioId" />
+			</form>
+			
+			<form
+				action="${pageContext.request.contextPath}/optimizePortfolio.htm?portfolioId=${portfolio.portfolioId}&">
+				<input type="submit" value="Optimize Portfolio"></input> <input type="hidden"
 					value="${portfolio.portfolioId}" name="portfolioId" />
 			</form>	
 			</div>
