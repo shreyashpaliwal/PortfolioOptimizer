@@ -121,8 +121,13 @@ public class Optimizer {
 		try {
 			historicalDataMap = YahooFinance.get(tempStockSymbols, from, to, Interval.MONTHLY);
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			try {
+				historicalDataMap = YahooFinance.get(new String[] {tempStockSymbols[0]+".NS"}, from, to, Interval.MONTHLY);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+		}				
 
 		tempStats.setStockSymbol(stockSymbol);
 		tempStats.setMonthlyReturns(historicalDataMap.entrySet().stream()
